@@ -37,7 +37,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
-            $token =  $user->createToken('MyApp')->accessToken;
+            $token =  $user->createToken('f-erp')->accessToken;
             return response()->json([
                 'token' => $token,
                 'user' => $user
