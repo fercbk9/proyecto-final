@@ -8,13 +8,16 @@ import { routerTransition } from '../../router.animations';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
-    public alerts: Array<any> = [];
-    public sliders: Array<any> = [];
-
+	nombre:string;
+	email:string;
+	
     constructor() {
       
     }
 
     ngOnInit() {}
-
+	darAlta()
+	{
+		console.log("Hola "+ this.nombre + " tu correo es " + this.email);
+	}
 }
