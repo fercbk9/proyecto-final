@@ -10,7 +10,7 @@ export class UsuariosService {
 private usuario:any;
 private headers:Headers = new Headers;
 constructor(private _http:Http, private _jsonp:Jsonp) {
-  
+  this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
  }
 
 
@@ -20,7 +20,7 @@ login(username:string,password:string)
   user['email'] = username;
   user['password'] = password;
   
-  return this._http.post("http://localhost:8000/api/login",user).map((data) => {
+  return this._http.post("http://localhost:8000/api/login","email="+user['email']+"&password="+user['password']).map((data) => {
     
     return data.json();
 
