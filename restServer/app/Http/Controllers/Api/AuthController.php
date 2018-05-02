@@ -12,7 +12,11 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'nombre' => 'required',
+            'apellidos' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'fecha_nacimiento' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
@@ -24,8 +28,9 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($request->get('password'));
-        $user = User::create($input);
-        $token =  $user->createToken('MyApp')->accessToken;
+        $user = User::create();
+
+        $token =  $user->createToken('f-erp')->accessToken;
 
         return response()->json([
             'token' => $token,
@@ -51,5 +56,11 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         return response()->json(compact('user'), 200);
+
     }
+    public function  index(){
+        return response()->json(User::all());
+    }
+
+
 }
