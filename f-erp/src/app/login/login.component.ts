@@ -11,12 +11,26 @@ import { UsuariosService} from '../services/usuarios.service';
 export class LoginComponent implements OnInit {
     email:string;
     password:string;
+    mensaje;
     constructor(public router: Router, private us:UsuariosService) {}
 
     ngOnInit() {}
 
     onLoggedin() {
-    this.us.login(this.email,this.password).subscribe((data) => console.log(data));
-        localStorage.setItem('isLoggedin', 'true');
+    this.us.login(this.email,this.password).subscribe((data) => {
+        console.log(data.user);
+        this.mensaje = data.user;
+        if(this.mensaje.email != null)
+        {
+            localStorage.setItem('isLoggedin', 'true');
+                
+        }
+        this.router.navigate(['/dashboard']);
+    });
+
+    
+
+    
+
     }
 }

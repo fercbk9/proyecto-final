@@ -28,8 +28,9 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($request->get('password'));
-        $user = User::create();
-
+        //$user = User::create();
+        $user = new User();
+        $user->save($input);
         $token =  $user->createToken('f-erp')->accessToken;
 
         return response()->json([

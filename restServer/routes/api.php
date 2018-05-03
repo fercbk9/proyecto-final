@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 //Route::post('register', 'Api\AuthController@register');
 Route::group(['middleware' => 'cors'], function(){
     Route::post('login', 'Api\AuthController@login');
-    Route::post('register', 'Api\AuthController@register');
-    Route::post('all', 'Api\AuthController@index');
+    Route::post('register', 'Api\UsuariosController@create');
+    Route::post('all', 'Api\UsuariosController@index');
 });
 //Route::post('login', 'Api\AuthController@login');
 Route::group(['middleware' => 'auth:api'], function () {
