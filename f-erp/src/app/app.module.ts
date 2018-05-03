@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { UsuariosService} from './services/usuarios.service';
 import { HttpModule, JsonpModule} from '@angular/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -40,6 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
     providers: [
         AuthGuard,
         UsuariosService
+       
     ],
     bootstrap: [AppComponent]
 })

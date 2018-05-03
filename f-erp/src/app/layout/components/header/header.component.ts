@@ -16,7 +16,8 @@ export class HeaderComponent implements OnInit {
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
         this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de|zh-CHS/) ? browserLang : 'en');
-        this.user = this.us.getUsuario();
+        
+        this.user = JSON.parse(localStorage.getItem('user'));
         this.router.events.subscribe(val => {
             if (
                 val instanceof NavigationEnd &&
@@ -47,6 +48,7 @@ export class HeaderComponent implements OnInit {
 
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
+        localStorage.removeItem('token');
     }
 
     changeLang(language: string) {

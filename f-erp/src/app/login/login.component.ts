@@ -18,11 +18,13 @@ export class LoginComponent implements OnInit {
 
     onLoggedin() {
     this.us.login(this.email,this.password).subscribe((data) => {
-        console.log(data.user);
+        console.log(data);
         this.mensaje = data.user;
         if(this.mensaje.email != null)
         {
             localStorage.setItem('isLoggedin', 'true');
+            localStorage.setItem('token',data.token);
+            localStorage.setItem('id',data.user.id);
                 
         }
         this.router.navigate(['/dashboard']);

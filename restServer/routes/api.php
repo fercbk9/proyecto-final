@@ -1,5 +1,5 @@
 <?php
-
+use App\Usuario;
 use Illuminate\Http\Request;
 
 /*
@@ -17,11 +17,17 @@ Route::group(['middleware' => 'cors'], function(){
     Route::post('login', 'Api\AuthController@login');
     Route::post('register', 'Api\UsuariosController@create');
     Route::post('all', 'Api\UsuariosController@index');
+    Route::post('profile', function($id){
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('profile', 'Api\AuthController@profile');
+        });
+
+    });
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('profile', 'Api\AuthController@profile');
+    });
+
 });
 //Route::post('login', 'Api\AuthController@login');
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::post('profile', 'Api\AuthController@profile');
-});
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+

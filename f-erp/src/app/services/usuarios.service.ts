@@ -2,19 +2,29 @@ import { Injectable } from '@angular/core';
 import { Http,Jsonp,Headers } from '@angular/http';
 import  'rxjs/Rx';
 import { logging } from 'selenium-webdriver';
-
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
-export class UsuariosService {
+export class UsuariosService  {
 private usuario:any;
-private headers:Headers = new Headers;
+private headers:Headers;
 constructor(private _http:Http, private _jsonp:Jsonp) {
-  this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  this.headers = new Headers({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Accept': 'application/json'
+});
+  
+
  }
 
  getUsuario(){
-   return this.usuario;
+
+ 
+
+   return this._http.post("http://localhost:8000/api/profile",{headers:this.headers}).map(data => {
+     return data.json();
+   });
  }
 
 login(username:string,password_intro:string)
@@ -31,10 +41,14 @@ login(username:string,password_intro:string)
       nombre: data.json().user.nombre,
       apellidos: data.json().user.apellidos,
       direccion: data.json().user.direccion,
-      telefeno: data.json().user.telefono,
+      telefono: data.json().user.telefono,
       fecha_nacimiento: data.json().user.fecha_nacimiento,
       email: data.json().user.email,
     }
+    localStorage.setItem('user',JSON.stringify(this.usuario));
+    console.log(this.usuario.token);
+    
+
     return data.json();
 
   },error => console.log(error)
