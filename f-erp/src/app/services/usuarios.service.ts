@@ -14,22 +14,25 @@ constructor(private _http:Http, private _jsonp:Jsonp) {
     'Authorization': 'Bearer ' + localStorage.getItem('token'),
     'Accept': 'application/json'
 });
-  
+
 
  }
- borrar(id){
+ borrar(id)
+ {
    let empleado = {
       id: id
    }
    return this._http.post("http://localhost:8000/api/borrar",empleado,{headers:this.headers}).map(data =>{ return data.json()});
  }
-editar(empleado){
+editar(empleado)
+{
   return this._http.post("http://localhost:8000/api/update",empleado,{headers:this.headers}).map(data => {
     return data.json();
   });
 }
 
- getUsuario(){
+ getUsuario()
+ {
    return this._jsonp.post("http://localhost:8000/api/profile",{headers:this.headers}).map(data => {
      return data.json();
    });
@@ -38,10 +41,10 @@ editar(empleado){
 getAllUsers()
 {
   return this._http.get("http://localhost:8000/api/all",{headers:this.headers}).map(data => {
-    
+
     return data.json();
   });
-} 
+}
 
 login(username:string,password_intro:string)
 {
@@ -50,7 +53,7 @@ login(username:string,password_intro:string)
     password: password_intro
   };
 
-  
+
   return this._http.post("http://localhost:8000/api/login",user).map((data) => {
     this.usuario = {
       token: data.json().token,
@@ -62,8 +65,8 @@ login(username:string,password_intro:string)
       email: data.json().user.email,
     }
     localStorage.setItem('user',JSON.stringify(this.usuario));
-    
-    
+
+
 
     return data.json();
 
@@ -71,10 +74,9 @@ login(username:string,password_intro:string)
   );
 }
 
+alta(empleado)
+{
+  return this._http.post("http://localhost:8000/api/register",empleado,{headers:this.headers}).map(data => {return data.json()});
 }
 
-
-
-
-
-
+}

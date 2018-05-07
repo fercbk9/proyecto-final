@@ -33,9 +33,8 @@ class UsuariosController extends Controller
             'direccion' => 'required',
             'telefono' => 'required',
             'fecha_nacimiento' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
+            'email' => 'required|email'
+
         ]);
 
         if ($validator->fails()) {
@@ -43,7 +42,7 @@ class UsuariosController extends Controller
         }
 
         $input = $request->all();
-        $input['password'] = bcrypt($request->get('password'));
+
         $user = new Usuario();
         $user->nombre = $input['nombre'];
         $user->apellidos = $input['apellidos'];
@@ -51,7 +50,7 @@ class UsuariosController extends Controller
         $user->telefono = $input['telefono'];
         $user->fecha_nacimiento = $input['fecha_nacimiento'];
         $user->email = $input['email'];
-        $user->password = $input['password'];
+        $user->password = bcrypt('123456');
         $user->save();
         //$token =  $user->createToken('f-erp')->accessToken;
 
@@ -71,7 +70,30 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'apellidos' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'fecha_nacimiento' => 'required',
+            'email' => 'required|email'
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 422);
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt('123456');
+        //$user = User::create();
+        $user = new Usuario();
+        $user->save($input);
+        //$token =  $user->createToken('f-erp')->accessToken;
+
+        return response()->json([
+            'message' => 'Usuario creado correctamente',
+            'user' => $user
+        ], 200);
     }
 
     /**

@@ -3,6 +3,9 @@
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-home"></i>&nbsp;{{ 'Dashboard' | translate }}
         </a>
+        <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-user"></i>&nbsp;{{ 'Empleados' | translate }}
+        </a>
         <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-clipboard"></i>&nbsp;{{ 'Inventario' | translate }}
         </a>

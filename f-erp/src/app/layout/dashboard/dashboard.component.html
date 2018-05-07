@@ -1,155 +1,33 @@
 <div [@routerTransition]>
-		<h1 class="text-muted" style="float: left;">Panel de Administración</h1>
-		<div class="col-md-2 darAlta" style="float: right;">
+	<div class="jumbotron">
+  	<h1 class="display-4">Alimentación Pellicer</h1>
+  	<p class="lead"></p>
+  	<hr class="my-4">
+  	<p>Sistema de gestión empresarial para empleados e inventarios.</p>
 
-			<button type="button" (click)="vaciamosCampos()" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
-				Dar de Alta
-			</button>
-			
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">{{tipo}} Empleados</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="vaciamosCampos()">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-								<label for="email">Correo Electrónico</label>
-								<div class="input-group mb-4">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="basic-addon1">@</span>
-								</div>
-								<input type="email" class="form-control" id="correo" placeholder="Email" name="email" [(ngModel)]="email">
-								</div>
-								</div>
-								<div class="form-group">
-								<label for="nomape">Nombre </label>
-								<div class="input-group mb-4">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-									</div>
-								
-								<input type="text" class="form-control" id="nom" placeholder="Nombre" name="nombre" [(ngModel)]="nombre">
-								</div>
-								</div>
-								<div class="form-group">
-								<label for="apellidos">Apellidos </label>
-								<div class="input-group mb-4">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-									</div>
-								
-								<input type="text" class="form-control" id="apellidos" placeholder="Apellidos" name="apellidos" [(ngModel)]="apellidos">
-								</div>
-								</div>
-								<div class="form-group">
-								<label for="dir">Dirección </label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-									</div>
-								
-								<input type="text" class="form-control" id="dir" placeholder="Direccion" name="direccion" [(ngModel)]="direccion">
-								</div>
-								
-								
-								<label for="tel">Teléfono </label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-									</div>
-								
-								<input type="text" class="form-control" id="tel" placeholder="telefono" name="telefono" [(ngModel)]="telefono">
-								</div>
-								</div>
-								<div class="form-group">
-								<label for="fecha">Fecha Nacimiento </label>
-								<div class="input-group mb-4">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-									</div>
-								
-								<input type="text" class="form-control" id="nom" placeholder="Fecha de Nacimiento" name="fecha" [(ngModel)]="fecha">
-								</div>
-								</div>
-								<div class="form-group">
-								 
-								
-								</div>
-						</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal" (click)="vaciamosCampos()">Cancelar</button>
-							<button type="button" class="btn btn-success" (click)="darAlta()">Guardar Empleado</button>
-						</div>
-					</div>
-				</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+		<div class="col-md-8">
+			<form>
+			<h2>Vacaciones</h2>
+			<hr>
+			<div class="form-group">
+			<label for="inicio">Fecha inicio</label>
+			<input type="date" class="form-control" id="inicio" aria-describedby="emailHelp" placeholder="fecha">
 			</div>
-				
-					</div>
-    <div class="row" style="clear: both;">
-        
-				<div class="col-md-12">
-					<h3>Listado de empleados</h3>
-					
-					
-						<table class="table" *ngIf="empleados">
-								<thead>
-								<tr>
-										<th>#</th>
-										<th>Nombre</th>
-										<th>Apellidos</th>
-										<th>Correo</th>
-										<th>Direccion</th>
-										<th>Telefono</th>
-										<th>Borrar</th>
-										<th>Editar</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr *ngFor="let empleado of empleados; let i = index">
-										<th scope="row">{{empleado.id}}</th>
-										<td>{{empleado.nombre}}</td>
-										<td>{{empleado.apellidos}}</td>
-										<td>{{empleado.email}}</td>
-										<td>{{empleado.direccion}}</td>
-										<td>{{empleado.telefono}}</td>
-										<td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalBorrar" (click)="index=i" >Eliminar</button></td>
-										<td><button class="btn btn-success" (click)="editar(i)" data-toggle="modal" data-target="#exampleModal">Editar</button></td>
-								</tr>
-
-								</tbody>
-						</table>
-				
-				</div>
-    </div>
-
-</div>
-
-
-
-<div class="modal fade" id="exampleModalBorrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelBorrar" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabelBorrar">Eliminar empleados</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>¿Estás seguro de que quieres eliminar este empleado?</p>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="borrar()">Borrar</button>
-      </div>
-    </div>
-  </div>
+			<div class="form-group">
+			<label for="fin">Fecha fin</label>
+			<input type="date" class="form-control" id="fin" aria-describedby="emailHelp" placeholder="Fecha">
+			</div>
+			<div class="form-group">
+			<button type="submit" class="btn btn-primary">Asignar vacaciones</button>
+			</div>
+			<div class="form-group">
+						<button type="submit" class="btn btn-success">Pedir Nomina de este mes</button>
+			</div>
+			</form>
+		</div>
+		</div>
+	</div>
 </div>
