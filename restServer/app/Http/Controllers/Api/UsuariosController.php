@@ -94,7 +94,7 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -106,7 +106,25 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = Usuario::find($id);
+        $input = $request->all();
+        $input['password'] = bcrypt($request->get('password'));
+
+        $user->nombre = $input['nombre'];
+        $user->apellidos = $input['apellidos'];
+        $user->direccion = $input['direccion'];
+        $user->telefono = $input['telefono'];
+        $user->fecha_nacimiento = $input['fecha_nacimiento'];
+        $user->email = $input['email'];
+        $user->password = $input['password'];
+        $user->save();
+        return response()->json([
+            'message' => 'Usuario Creado Correctamente',
+            'user' => $user
+        ], 200);
+
+
+
     }
 
     /**

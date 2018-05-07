@@ -57,6 +57,7 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         return response()->json(compact('user'), 200);
+        
 
     }
     public function  index(){

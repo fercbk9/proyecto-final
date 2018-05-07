@@ -18,14 +18,25 @@ constructor(private _http:Http, private _jsonp:Jsonp) {
 
  }
 
+editar(empleado){
+  this._http.post("http://localhost:8000/api/editar",empleado,{headers:this.headers}).map(data => {
+    return data.json();
+  });
+}
+
  getUsuario(){
-
- 
-
-   return this._http.post("http://localhost:8000/api/profile",{headers:this.headers}).map(data => {
+   return this._jsonp.post("http://localhost:8000/api/profile",{headers:this.headers}).map(data => {
      return data.json();
    });
  }
+
+getAllUsers()
+{
+  return this._http.get("http://localhost:8000/api/all",{headers:this.headers}).map(data => {
+    
+    return data.json();
+  });
+} 
 
 login(username:string,password_intro:string)
 {
@@ -46,7 +57,7 @@ login(username:string,password_intro:string)
       email: data.json().user.email,
     }
     localStorage.setItem('user',JSON.stringify(this.usuario));
-    console.log(this.usuario.token);
+    
     
 
     return data.json();
@@ -56,3 +67,9 @@ login(username:string,password_intro:string)
 }
 
 }
+
+
+
+
+
+
