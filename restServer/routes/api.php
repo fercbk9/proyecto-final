@@ -17,8 +17,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::post('login', 'Api\AuthController@login');
     Route::post('register', 'Api\UsuariosController@create');
     Route::get('all', 'Api\UsuariosController@index');
-    Route::post('editar','Api\UsuariosController@update');
-    Route::post('eliminar','Api\UsuariosController@destroy');
+    Route::post('update','Api\UsuariosController@update');
+    Route::post('borrar','Api\UsuariosController@destroy');
 
 
 });

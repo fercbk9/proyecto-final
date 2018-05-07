@@ -17,9 +17,14 @@ constructor(private _http:Http, private _jsonp:Jsonp) {
   
 
  }
-
+ borrar(id){
+   let empleado = {
+      id: id
+   }
+   return this._http.post("http://localhost:8000/api/borrar",empleado,{headers:this.headers}).map(data =>{ return data.json()});
+ }
 editar(empleado){
-  this._http.post("http://localhost:8000/api/editar",empleado,{headers:this.headers}).map(data => {
+  return this._http.post("http://localhost:8000/api/update",empleado,{headers:this.headers}).map(data => {
     return data.json();
   });
 }

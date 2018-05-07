@@ -16,13 +16,15 @@ export class DashboardComponent implements OnInit {
     fecha:string;
     empleados:any[];
     edito:boolean = false;
+    id:number;
+    index:number;
     tipo = "Alta";
     constructor(private us:UsuariosService) {
-      
+        this.getUsers();
     }
 
     ngOnInit() {
-        this.getUsers();
+        
         
     }
     editar(id)
@@ -35,18 +37,32 @@ export class DashboardComponent implements OnInit {
         this.direccion = this.empleados[id].direccion;
         this.telefono = this.empleados[id].telefono;
         this.fecha = this.empleados[id].fecha_nacimiento;
+        this.id = this.empleados[id].id;
         this.tipo = "Modificar";
     }
 	darAlta()
 	{
         if (this.edito) {
-            //Editamos 
+            
+            let empleado = {
+                nombre: this.nombre,
+                apellidos: this.apellidos,
+                email: this.email,
+                fecha_nacimiento : this.fecha,
+                direccion: this.direccion,
+                telefono: this.telefono,
+                id: this.id
+
+            }
+            this.us.editar(empleado).subscribe(data => console.log(data));
+
         }else{
             //Damos de alta
         }
         this.edito = false;
         console.log("Hola "+ this.nombre + " tu correo es " + this.email);
-        vaciamosCampos();
+        this.vaciamosCampos();
+        this.getUsers();
     }
     vaciamosCampos()
     {
@@ -66,5 +82,10 @@ export class DashboardComponent implements OnInit {
             console.log(data);
             
         });
+    }
+    borrar(){
+        this.id = this.empleados[this.index].id;
+        this.us.borrar(this.id).subscribe(data => console.log(data));
+        setInterval(this.getUsers(),1500);
     }
 }

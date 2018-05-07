@@ -104,22 +104,27 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $user = Usuario::find($id);
         $input = $request->all();
-        $input['password'] = bcrypt($request->get('password'));
 
-        $user->nombre = $input['nombre'];
-        $user->apellidos = $input['apellidos'];
-        $user->direccion = $input['direccion'];
-        $user->telefono = $input['telefono'];
-        $user->fecha_nacimiento = $input['fecha_nacimiento'];
-        $user->email = $input['email'];
-        $user->password = $input['password'];
-        $user->save();
+        $user = Usuario::query("Select * from users where id = ".$input['id'])->find($input['id']);
+        //dd($user);
+
+        $cosas['nombre'] = $input['nombre'];
+        $cosas['apellidos'] = $input['apellidos'];
+        if($input['email'] != $user->value('email')) {
+            $cosas['email'] = $input['email'];
+        }
+        $cosas['fecha_nacimiento'] = $input['fecha_nacimiento'];
+        $cosas['direccion'] = $input['direccion'];
+        $cosas['telefono'] = $input['telefono'];
+        if(isset($input['password'])){
+            $cosas['password'] = $input['password'];
+        }
+        $user->update($cosas);
         return response()->json([
-            'message' => 'Usuario Creado Correctamente',
+            'message' => 'Usuario Modificado Correctamente',
             'user' => $user
         ], 200);
 
@@ -133,8 +138,14 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $input = $request->all();
+        $id = $input['id'];
+        $user = Usuario::query("select * from users where id = $id")->find($id);
+        $user->delete();
+        return response()->json([
+            'message' => 'Usuario Borrado Correctamente'
+                    ],200);
     }
 }
