@@ -27,6 +27,7 @@ class UsuariosController extends Controller
      */
     public function create(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'apellidos' => 'required',

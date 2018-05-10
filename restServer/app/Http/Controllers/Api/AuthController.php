@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use JWTAuth;
+
 class AuthController extends Controller
 {
     public function register(Request $request)
@@ -41,9 +43,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
+
+
+        if ( $token = JWTAuth::attempt($request->only('email', 'password'))) {
+
             $user = Auth::user();
-            $token =  $user->createToken('f-erp')->accessToken;
+            
             return response()->json([
                 'token' => $token,
                 'user' => $user
@@ -62,6 +67,15 @@ class AuthController extends Controller
     }
     public function  index(){
         return response()->json(User::all());
+    }
+
+    public function logout()
+    {
+        JWTAuth::invalidate();
+        return response([
+            'status' => 'success',
+            'msg' => 'Logged out Successfully.'
+        ], 200);
     }
 
 

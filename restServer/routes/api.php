@@ -23,7 +23,7 @@ Route::group(['middleware' => 'cors'], function(){
 
 });
 //Route::post('login', 'Api\AuthController@login');
-Route::group(['middleware' => 'auth:api'], function () {
+/*Route::group(['middleware' => 'auth:api'], function () {
     Route::post('profile', 'Api\AuthController@profile');
-});
-
+});*/
+Route::middleware('jwt.auth')->post('profile', 'Api\AuthController@profile')->middleware('cors');
