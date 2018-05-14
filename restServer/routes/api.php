@@ -20,7 +20,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::post('update','Api\UsuariosController@update');
     Route::post('borrar','Api\UsuariosController@destroy');
     Route::middleware('jwt.auth')->post('profile', 'Api\AuthController@profile');
-
+    Route::middleware('jwt.auth')->post('nominas/crear','Api\NominaController@store');
+    Route::middleware('jwt.auth')->post('nominas/ver-nomina','Api\NominaController@show');
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {
