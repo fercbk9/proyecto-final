@@ -19,11 +19,11 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('all', 'Api\UsuariosController@index');
     Route::post('update','Api\UsuariosController@update');
     Route::post('borrar','Api\UsuariosController@destroy');
-
+    Route::middleware('jwt.auth')->post('profile', 'Api\AuthController@profile');
 
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {
     Route::post('profile', 'Api\AuthController@profile');
 });*/
-Route::middleware('jwt.auth')->post('profile', 'Api\AuthController@profile')->middleware('cors');
+//Route::middleware('jwt.auth')->post('profile', 'Api\AuthController@profile');

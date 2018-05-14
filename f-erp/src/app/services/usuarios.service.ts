@@ -3,20 +3,37 @@ import { Http,Jsonp,Headers } from '@angular/http';
 import  'rxjs/Rx';
 import { logging } from 'selenium-webdriver';
 import { Observable } from 'rxjs/Observable';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
 
 
 @Injectable()
 export class UsuariosService  {
 private usuario:any;
-private headers:Headers;
-constructor(private _http:Http, private _jsonp:Jsonp) {
-  this.headers = new Headers({
-    'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    'Accept': 'application/json'
-});
+private headers:Headers = new Headers();
+constructor(private _http:Http, private httpCli:HttpClient) {
+  this.headers.append("Content-Type","application/json");
+  this.headers.append("Authorization","Bearer "+localStorage.getItem('token'));
 
 
  }
+ intercept(request: HttpRequest, next: HttpHandler): Observable<HttpEvent> {
+  let headers: any;
+  // Si el usuario está logueado, de lo contrario no adjuntar estos headers
+  // pues puede que el endpoint que estamos llamando es el Login o Register
+  // los cuales no requerir que el usuario esté autenticado, sería estupido.
+  if (localStorage.getItem('token')) {
+      // Adjuntamos los headers a la petición
+      headers = new HttpHeaders({
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      });
+  }
+  const cloneReq = request.clone({headers});
+
+  return next.handle(cloneReq);
+}
  borrar(id)
  {
    let empleado = {
@@ -33,9 +50,18 @@ editar(empleado)
 
  getUsuario()
  {
-   return this._jsonp.post("http://localhost:8000/api/profile",{headers:this.headers}).map(data => {
-     return data.json();
-   });
+   
+   console.log(localStorage.getItem('token'));
+   
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
+  
+
+  console.log(headers);
+   return this.httpCli.post("http://localhost:8000/api/profile",{headers: headers});
  }
 
 getAllUsers()

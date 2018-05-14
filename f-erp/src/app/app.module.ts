@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient,HttpHeaders } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {FormsModule} from '@angular/forms';
@@ -35,12 +35,15 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule,
         FormsModule,
         HttpModule,
-        JsonpModule
+        JsonpModule,
+        
+        
     ],
     declarations: [AppComponent],
     providers: [
         AuthGuard,
-        UsuariosService
+        UsuariosService,
+        { provide: HTTP_INTERCEPTORS, useClass: UsuariosService, multi: true },
        
     ],
     bootstrap: [AppComponent]

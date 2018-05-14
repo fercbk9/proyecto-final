@@ -9,10 +9,10 @@ import { UsuariosService} from '../../services/usuarios.service';
 })
 export class DashboardComponent implements OnInit {
 
-    empleados:any[];
+    empleado:any;
     model: any = 0;
     constructor(private us:UsuariosService) {
-
+        this.us.getUsuario().subscribe(data => console.log(data))
     }
 
     ngOnInit() {
