@@ -124,7 +124,7 @@
                     <i class="fa fa-user"></i> {{user.nombre}} <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a data-toggle="modal" href="#exModal" class="dropdown-item">
+                    <a data-toggle="modal" href="#exModal" class="dropdown-item" (click)="cargamosPerfil()">
                         <i class="fa fa-fw fa-user"></i> {{ 'Perfil' | translate }}
                     </a>
                     <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
@@ -139,17 +139,83 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="perfilmodalejemplo">Perfil</h5>
+          <h5 class="modal-title" id="perfilmodalejemplo">{{nombre | uppercase}} {{apellidos | uppercase}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          Hola Pendejp
+                <div class="alert alert-success col-md-12 text-center" role="alert" >
+                        Contraseña Actualizada
+                </div>
+            <form>
+                <div class="form-group">
+                <label for="mail">Correo Electrónico</label>
+                <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="email" class="form-control" id="mail" placeholder="Email" name="email" disabled [(ngModel)]="email">
+                </div>
+                </div>
+                <div class="form-group">
+                <label for="direc">Dirección </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-location-arrow"></i></span>
+                    </div>
+
+                <input type="text" class="form-control" id="direc" placeholder="Direccion" disabled name="direccion" [(ngModel)]="direccion">
+                </div>
+                <div class="form-group">
+
+                <label for="telf">Teléfono </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
+                    </div>
+
+                <input type="text" class="form-control" id="telf" placeholder="telefono" disabled name="telefono" [(ngModel)]="telefono">
+                </div>
+                </div>
+            </div>
+                <div class="form-group">
+                <label for="fech">Fecha Nacimiento </label>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+
+                <input type="text" class="form-control" id="fech" placeholder="Fecha de Nacimiento" disabled name="fecha" [(ngModel)]="fecha">
+                </div>
+                <span><small>* Para cambiar los datos personales contactar con el administrador de la web.</small></span>
+                </div>
+                <div class="form-group">
+                        <label for="pass1">Contraseña </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                            </div>
+        
+                        <input type="password" class="form-control" id="pass1" placeholder="Contraseña" name="pass1" [(ngModel)]="pass1">
+                        </div>
+                </div>
+                <div class="form-group">
+                        <label for="pass2">Repetir Contraseña </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                            </div>
+        
+                        <input type="password" class="form-control" id="pass2" placeholder="Repetir Contraseña" name="pass2" [(ngModel)]="pass2">
+                        </div>
+                </div>
+
+        </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar Cambios</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cambiar Contraseña</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>

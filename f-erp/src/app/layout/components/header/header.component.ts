@@ -5,11 +5,19 @@ import { UsuariosService} from '../../../services/usuarios.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss',]
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
     user:any;
+    nombre:string;
+    apellidos:string;
+    email:string;
+    fecha:string;
+    telefono:string;
+    direccion:string;
+    pass1:string;
+    pass2:string;
     constructor(private translate: TranslateService, public router: Router, private us:UsuariosService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
@@ -53,5 +61,13 @@ export class HeaderComponent implements OnInit {
 
     changeLang(language: string) {
         this.translate.use(language);
+    }
+    cargamosPerfil(){
+        this.nombre = this.user.nombre;
+        this.apellidos = this.user.apellidos;
+        this.direccion = this.user.direccion;
+        this.fecha = this.user.fecha_nacimiento;
+        this.telefono = this.user.telefono;
+        this.email = this.user.email;
     }
 }

@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss']
+    styleUrls: ['./sidebar.component.scss','./modal.css']
 })
 export class SidebarComponent {
     isActive: boolean = false;
