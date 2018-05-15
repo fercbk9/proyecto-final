@@ -14,7 +14,7 @@
     <h1 class="text-muted" style="float: left;">Panel de Administración</h1>
 		<div class="col-md-2 darAlta" style="float: right;">
 
-			<button type="button" (click)="vaciamosCampos()" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
+			<button *ngIf="!admin" type="button" (click)="vaciamosCampos()" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
 				Dar de Alta
 			</button>
 
@@ -110,7 +110,7 @@
 					<h3>Listado de empleados</h3>
 
 
-						<table class="table" *ngIf="cargado">
+						<table class="table table-responsive table-hover" *ngIf="cargado">
 								<thead>
 								<tr>
 										<th>#</th>
@@ -119,8 +119,8 @@
 										<th>Correo</th>
 										<th>Direccion</th>
 										<th>Telefono</th>
-										<th>Borrar</th>
-										<th>Editar</th>
+										<th *ngIf="!admin">Borrar</th>
+										<th *ngIf="!admin">Editar</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -131,8 +131,8 @@
 										<td>{{empleado.email}}</td>
 										<td>{{empleado.direccion}}</td>
 										<td>{{empleado.telefono}}</td>
-										<td><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalBorrar" (click)="index=i" >Eliminar</button></td>
-										<td><button class="btn btn-success" (click)="editar(i)" data-toggle="modal" data-target="#exampleModal">Editar</button></td>
+										<td *ngIf="!admin"><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalBorrar" (click)="index=i" >Eliminar</button></td>
+										<td *ngIf="!admin"><button class="btn btn-success" (click)="editar(i)" data-toggle="modal" data-target="#exampleModal">Editar</button></td>
 								</tr>
 
 								</tbody>

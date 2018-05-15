@@ -21,7 +21,7 @@ export class SidebarComponent {
         this.router.events.subscribe(val => {
             if (
                 val instanceof NavigationEnd &&
-                window.innerWidth <= 992 &&
+                window.innerWidth <= 1024 &&
                 this.isToggled()
             ) {
                 this.toggleSidebar();

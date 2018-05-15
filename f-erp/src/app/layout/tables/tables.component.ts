@@ -20,12 +20,21 @@ export class TablesComponent implements OnInit {
     id:number;
     index:number;
     tipo = "Alta";
+    admin:boolean = true;
     eliminado:boolean = false;
     alta:boolean = false;
     editado:boolean = false;
     cargado:boolean = false;
     constructor(private us:UsuariosService) {
       this.getUsers();
+      let cargo = localStorage.getItem("cargo");
+      if(cargo == 'ADMIN'){
+          this.admin = false;
+
+      }
+      console.log(this.admin);
+      
+
     }
 
     ngOnInit() {
@@ -45,6 +54,7 @@ export class TablesComponent implements OnInit {
         this.fecha = this.empleados[id].fecha_nacimiento;
         this.id = this.empleados[id].id;
         this.tipo = "Modificar";
+        
     }
 	darAlta()
 	{

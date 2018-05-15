@@ -17,7 +17,7 @@ constructor(private _http:Http, private httpCli:HttpClient) {
 
 
  }
- intercept(request: HttpRequest, next: HttpHandler): Observable<HttpEvent> {
+ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
   let headers: any;
   // Si el usuario está logueado, de lo contrario no adjuntar estos headers
   // pues puede que el endpoint que estamos llamando es el Login o Register
@@ -33,18 +33,28 @@ constructor(private _http:Http, private httpCli:HttpClient) {
   const cloneReq = request.clone({headers});
 
   return next.handle(cloneReq);
-}
+ }
  borrar(id)
  {
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
    let empleado = {
       id: id
    }
-   return this._http.post("http://localhost:8000/api/borrar",empleado,{headers:this.headers}).map(data =>{ return data.json()});
+   return this.httpCli.post("http://localhost:8000/api/borrar",empleado,{headers:headers}).map(data =>{ return data});
  }
 editar(empleado)
 {
-  return this._http.post("http://localhost:8000/api/update",empleado,{headers:this.headers}).map(data => {
-    return data.json();
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
+  return this.httpCli.post("http://localhost:8000/api/update",empleado,{headers:headers}).map(data => {
+    return data;
   });
 }
 
@@ -102,7 +112,12 @@ login(username:string,password_intro:string)
 
 alta(empleado)
 {
-  return this._http.post("http://localhost:8000/api/register",empleado,{headers:this.headers}).map(data => {return data.json()});
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
+  return this.httpCli.post("http://localhost:8000/api/register",empleado,{headers:headers}).map(data => {return data});
 }
 
 }

@@ -12,7 +12,14 @@ export class DashboardComponent implements OnInit {
     empleado:any;
     model: any = 0;
     constructor(private us:UsuariosService) {
-        this.us.getUsuario().subscribe(data => console.log(data))
+        this.us.getUsuario().subscribe(data => {
+            console.log(data);
+            localStorage.setItem("cargo",data['user'].cargo);
+            console.log(localStorage.getItem("cargo"));
+            
+            
+        })
+
     }
 
     ngOnInit() {

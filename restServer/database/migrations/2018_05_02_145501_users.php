@@ -20,6 +20,7 @@ class Users extends Migration
             $table->string('apellidos',50);
             $table->string('direccion',200);
             $table->string('telefono',50);
+            $table->string("cargo",15);
             $table->date('fecha_nacimiento',10);
             $table->string('email',50)->unique();
             $table->string('password',255);
