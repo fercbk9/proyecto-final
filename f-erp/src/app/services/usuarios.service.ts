@@ -81,7 +81,14 @@ getAllUsers()
     return data.json();
   });
 }
-
+fechas_minimas_maximas(){
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
+  return this.httpCli.post("http://localhost:8000/api/nominas/cargar_fechas",{headers:headers}).map(data =>  {return data});
+}
 login(username:string,password_intro:string)
 {
   let user:any = {
@@ -99,6 +106,7 @@ login(username:string,password_intro:string)
       telefono: data.json().user.telefono,
       fecha_nacimiento: data.json().user.fecha_nacimiento,
       email: data.json().user.email,
+      id: data.json().user.id
     }
     localStorage.setItem('user',JSON.stringify(this.usuario));
 

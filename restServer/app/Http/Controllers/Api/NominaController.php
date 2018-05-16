@@ -18,7 +18,15 @@ class NominaController extends Controller
      */
     public function index()
     {
-        //
+        $year_low = DB::select("select fecha_nomina from nominas order by fecha_nomina limit 1");
+        $year_low = $year_low[0]->fecha_nomina;
+        $year_high = DB::select("select fecha_nomina from nominas order by fecha_nomina desc limit 1");
+        $year_high = $year_high[0]->fecha_nomina;
+
+        return response()->json([
+            "fecha_minima" => $year_low,
+            "fecha_maxima" => $year_high
+        ],200);
     }
 
     /**
