@@ -143,7 +143,7 @@ class UsuariosController extends Controller
         $cosas['direccion'] = $input['direccion'];
         $cosas['telefono'] = $input['telefono'];
         if(isset($input['password'])){
-            $cosas['password'] = $input['password'];
+            $cosas['password'] = bcrypt($input['password']);
         }
         $user->update($cosas);
         return response()->json([

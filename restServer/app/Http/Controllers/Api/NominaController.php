@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Nomina;
+use App\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class NominaController extends Controller
@@ -48,6 +51,13 @@ class NominaController extends Controller
             return response()->json(['error'=>$validator->errors()], 422);
         }
         $input = $request->all();
+        $user = User::query("select * from users where id = ".$input['id_empleado'])->find($input['id_empleado']);
+        //verificamos  que existe el usuario
+        if(empty($user)){
+            return response()->json([
+                'message-error' => 'no existe ese usuario'
+            ], 200);
+        }
         $nomina = new Nomina();
         $nomina->id_empleado = $input['id_empleado'];
         $nomina->salario_base = $input['salario_base'];
@@ -83,10 +93,26 @@ class NominaController extends Controller
             return response()->json(['error'=>$validator->errors()], 422);
         }
         $input = $request->all();
-        $nomina = Nomina::query("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina = '$input[fecha_nomina]'")->get();
-        return response()->json([
-            'message' => $nomina
-        ], 200);
+        //$nomina = Nomina::query("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina = '$input[fecha_nomina]'")->get();
+        $user = User::query("select * from users where id = ".$input['id_empleado'])->find($input['id_empleado']);
+        //verificamos  que existe el usuario
+        if(empty($user)){
+            return response()->json([
+                'message-error' => 'no existe ese usuario'
+            ], 200);
+        }
+        $nomina = DB::select("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina = '$input[fecha_nomina]'");
+
+        //verificamos si la consulta ha recibido algún valor
+        if(empty($nomina)){
+            return response()->json([
+                'message-error' => 'no existe esa nomina'
+            ], 200);
+        }
+        $nomina = $nomina[0];
+        $pdf = PDF::loadView('pdf', compact('nomina'),compact('user'));
+        return $pdf->download("$user->nombre$user->apellidos-$nomina->fecha_nomina.pdf") ;
+        /**/
     }
 
     /**
@@ -122,4 +148,5 @@ class NominaController extends Controller
     {
         //
     }
+
 }
