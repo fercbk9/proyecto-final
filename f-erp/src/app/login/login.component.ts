@@ -12,7 +12,28 @@ export class LoginComponent implements OnInit {
     email:string;
     password:string;
     mensaje;
-    constructor(public router: Router, private us:UsuariosService) {}
+    year_minimo:number;
+    year_maximo:number;
+    years:number[] = [];
+    constructor(public router: Router, private us:UsuariosService) {
+        this.us.fechas_minimas_maximas().subscribe(data => {
+            let fecha_minima = new Date(data['fecha_minima']);
+            let fecha_maxima = new Date(data['fecha_maxima']);
+            console.log(fecha_minima);
+            
+            this.year_minimo = fecha_minima.getFullYear();
+            this.year_maximo = fecha_minima.getFullYear();
+            if(this.year_minimo == this.year_maximo)
+            this.years.push(this.year_minimo);
+            else{
+                for(let i = this.year_maximo; i >= this.year_minimo; i--){
+                    this.years.push(i);
+                }
+            }
+            localStorage.setItem('years',JSON.stringify(this.years));
+
+        })
+    }
 
     ngOnInit() {}
 
