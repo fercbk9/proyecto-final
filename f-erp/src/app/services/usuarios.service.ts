@@ -128,4 +128,18 @@ alta(empleado)
   return this.httpCli.post("http://localhost:8000/api/register",empleado,{headers:headers}).map(data => {return data});
 }
 
+verNomina(fecha:string,id:string)
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/pdf'
+});
+let nomina:any = {
+  fecha_nomina: fecha,
+  id_empleado: id
+}
+  return this._http.post("http://localhost:8000/api/nominas/ver-nomina",nomina,{headers:this.headers}).map(data => data);
+}
+
 }

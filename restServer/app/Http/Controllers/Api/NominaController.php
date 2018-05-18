@@ -109,7 +109,7 @@ class NominaController extends Controller
                 'message-error' => 'no existe ese usuario'
             ], 200);
         }
-        $nomina = DB::select("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina = '$input[fecha_nomina]'");
+        $nomina = DB::select("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina like '$input[fecha_nomina]%'");
 
         //verificamos si la consulta ha recibido algún valor
         if(empty($nomina)){
@@ -118,8 +118,13 @@ class NominaController extends Controller
             ], 200);
         }
         $nomina = $nomina[0];
-        $pdf = PDF::loadView('pdf', compact('nomina'),compact('user'));
-        return $pdf->download("$user->nombre$user->apellidos-$nomina->fecha_nomina.pdf") ;
+        return response()->json([
+           'salario_base' => $nomina->salario_base,
+           'fecha_nomina' => $nomina->fecha_nomina,
+           'total' => $nomina->total
+        ]);
+        //$pdf = PDF::loadView('pdf', compact('nomina'),compact('user'));
+        //return $pdf->download("$user->nombre$user->apellidos-$nomina->fecha_nomina.pdf") ;
         /**/
     }
 

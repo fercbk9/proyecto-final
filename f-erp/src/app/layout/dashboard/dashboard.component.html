@@ -23,13 +23,14 @@
 			<div class="form-group">
 			<button type="submit" class="btn btn-primary">Asignar vacaciones</button>
 			</div>
-			<div class="form-group">
-						<button type="submit" class="btn btn-success">Pedir Nomina de este mes</button>
-			</div>
+			
 			</form>
 		</div>
 		</div>
 		<div class="col-md-4">
+				<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="error">
+						{{error}}
+					</div>
 			<form>
 					<h2>Nóminas</h2>
 					<hr>
@@ -62,12 +63,13 @@
 						</div>
 						<select class="custom-select" id="inputGroupSelect02" name="year_elegido" [(ngModel)]="year_elegido">
 						  <option *ngFor="let i of years">{{i}}</option>
-						  
-
 						</select>
-					  </div>
+						</div>
+						
 				</div>
-
+				<div class="form-group">
+					<button type="submit" class="btn btn-success" (click)="verNomina()">Ver Nomina</button>
+				</div>
 		</form>
 		</div>
 	</div>
