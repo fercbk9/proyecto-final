@@ -72,11 +72,12 @@ class AuthController extends Controller
     public function logout()
     {
         JWTAuth::invalidate();
-        return response([
+        return response()->json([
             'status' => 'success',
             'msg' => 'Logged out Successfully.'
         ], 200);
     }
+
 
 
 }

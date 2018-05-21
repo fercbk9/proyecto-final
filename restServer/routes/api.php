@@ -16,13 +16,16 @@ use Illuminate\Http\Resources;
 Route::group(['middleware' => 'cors'], function(){
     Route::post('login', 'Api\AuthController@login');
     Route::middleware('jwt.auth')->post('register', 'Api\UsuariosController@create');
+    Route::middleware('jwt.auth')->post('logout', 'Api\AuthController@logout');
     Route::get('all', 'Api\UsuariosController@index');
     Route::middleware('jwt.auth')->post('update','Api\UsuariosController@update');
     Route::middleware('jwt.auth')->post('borrar','Api\UsuariosController@destroy');
     Route::middleware('jwt.auth')->post('profile', 'Api\AuthController@profile');
     Route::middleware('jwt.auth')->post('nominas/crear','Api\NominaController@store');
-    Route::middleware('jwt.auth')->post('nominas/ver-nomina','Api\NominaController@show');
+    Route::post('nominas/ver-nomina','Api\NominaController@show');
     Route::post('nominas/cargar_fechas','Api\NominaController@index');
+    Route::middleware('jwt.auth')->post('nominas/consultar_nomina','Api\NominaController@consultar');
+
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {

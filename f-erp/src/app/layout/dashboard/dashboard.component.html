@@ -68,9 +68,25 @@
 						
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-success" (click)="verNomina()">Ver Nomina</button>
+					<button type="submit" class="btn btn-success" (click)="verNomina()">Descargar Nómina</button>
 				</div>
 		</form>
+		<form *ngIf="admin">
+			<h2>Administrar Nóminas</h2>
+			<hr>
+			<div class="form-group">
+			<label for="inicio">Fecha inicio</label>
+			<input type="text" class="form-control" id="inicio" aria-describedby="emailHelp" placeholder="fecha">
+			</div>
+			<div class="form-group">
+			<label for="fin">Fecha fin</label>
+			<input type="date" class="form-control" id="fin" aria-describedby="emailHelp" placeholder="Fecha">
+			</div>
+			<div class="form-group">
+			<button type="submit" class="btn btn-primary">Registrar Nómina</button>
+			</div>
+			
+			</form>
 		</div>
 	</div>
 </div>

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http,Jsonp,Headers } from '@angular/http';
+import { Http,Jsonp,Headers, RequestOptions, ResponseContentType } from '@angular/http';
 import  'rxjs/Rx';
 import { logging } from 'selenium-webdriver';
 import { Observable } from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
+import * as FileSaver from 'file-saver'; 
 
 
 @Injectable()
@@ -128,6 +129,26 @@ alta(empleado)
   return this.httpCli.post("http://localhost:8000/api/register",empleado,{headers:headers}).map(data => {return data});
 }
 
+//Consultamos si la nomina existe para visualizarla
+consultarNomina(fecha:string,id:string){
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
+let nomina:any = {
+  fecha_nomina: fecha,
+  id_empleado: id
+}
+return this.httpCli.post("http://localhost:8000/api/nominas/consultar_nomina",nomina,{headers:headers}).map(res => {
+  return res;
+});
+}
+
+
+
+
+
 verNomina(fecha:string,id:string)
 {
   let headers = new HttpHeaders({
@@ -139,7 +160,16 @@ let nomina:any = {
   fecha_nomina: fecha,
   id_empleado: id
 }
-  return this._http.post("http://localhost:8000/api/nominas/ver-nomina",nomina,{headers:this.headers}).map(data => data);
+  let options = new RequestOptions({headers:this.headers});
+  options.responseType = ResponseContentType.Blob;
+  return this._http.post("http://localhost:8000/api/nominas/ver-nomina",nomina,options).map(data => {
+    let fileBlob = data.blob();
+    let blob = new Blob([fileBlob], { 
+       type: 'application/pdf' // must match the Accept type
+    });
+    let filename = fecha+'.pdf';
+    FileSaver.saveAs(blob, filename);
+  });
 }
 
 }

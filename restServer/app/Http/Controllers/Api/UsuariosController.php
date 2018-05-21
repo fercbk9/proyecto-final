@@ -171,4 +171,6 @@ class UsuariosController extends Controller
             'message' => 'Usuario Borrado Correctamente'
                     ],200);
     }
+
+
 }

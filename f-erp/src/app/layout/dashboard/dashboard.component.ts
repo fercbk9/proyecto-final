@@ -15,18 +15,18 @@ export class DashboardComponent implements OnInit {
     year_elegido:string
     years:number[] = [];
     error:string;
+    cargo:string;
+    admin:boolean = false;
     constructor(private us:UsuariosService) {
         this.us.getUsuario().subscribe(data => {
             console.log(data);
             localStorage.setItem("cargo",data['user'].cargo);
             localStorage.setItem("id_empleado",data['user'].id);
-            console.log(localStorage.getItem("id_empleado"));
-            
-            console.log(localStorage.getItem("cargo"));
             this.years = JSON.parse(localStorage.getItem('years'));
             this.year_elegido = this.years[0].toString();
-            
-            
+            this.cargo = localStorage.getItem("cargo");
+            if(this.cargo == "ADMIN")
+            this.admin = true;
             
         });
 
@@ -85,14 +85,24 @@ export class DashboardComponent implements OnInit {
     }
     //Mandamos para ver la nomina.
     console.log(fecha);
+    if(this.mes_elegido != "99"){
     
-    this.us.verNomina(fecha,localStorage.getItem("id_empleado")).subscribe(data  => {
+    this.us.consultarNomina(fecha,localStorage.getItem("id_empleado")).subscribe(data  => {
         console.log(data);
         if(data['message-error']){
             this.error = "No tienes nominas en ese mes"
         }
+        if(this.error == "" || this.error == undefined){
+            this.us.verNomina(fecha,localStorage.getItem('id_empleado')).subscribe(data => data);
+        }
         
     });
+    }
+    else{
+        this.error = "Elegir mes válido"
+    }
+    
+
 }   
     }
 }

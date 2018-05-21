@@ -118,16 +118,50 @@ class NominaController extends Controller
             ], 200);
         }
         $nomina = $nomina[0];
-        return response()->json([
-           'salario_base' => $nomina->salario_base,
-           'fecha_nomina' => $nomina->fecha_nomina,
-           'total' => $nomina->total
-        ]);
-        //$pdf = PDF::loadView('pdf', compact('nomina'),compact('user'));
-        //return $pdf->download("$user->nombre$user->apellidos-$nomina->fecha_nomina.pdf") ;
+        /**/
+        $pdf = PDF::loadView('pdf', compact('nomina'),compact('user'));
+        return $pdf->download("$user->nombre$user->apellidos-$nomina->fecha_nomina.pdf") ;
         /**/
     }
+    public function consultar(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_empleado' => 'required',
+            'fecha_nomina' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 422);
+        }
+        $input = $request->all();
+        //$nomina = Nomina::query("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina = '$input[fecha_nomina]'")->get();
+        $user = User::query("select * from users where id = ".$input['id_empleado'])->find($input['id_empleado']);
+        //verificamos  que existe el usuario
+        if(empty($user)){
+            return response()->json([
+                'message-error' => 'no existe ese usuario'
+            ], 200);
+        }
+        $nomina = DB::select("Select * From Nominas where id_empleado = $input[id_empleado] and fecha_nomina like '$input[fecha_nomina]%'");
 
+        //verificamos si la consulta ha recibido algún valor
+        if(empty($nomina)){
+            return response()->json([
+                'message-error' => 'no existe esa nomina'
+            ], 200);
+        }
+        $nomina = $nomina[0];
+        return response()->json([
+            'id_empleado' => $nomina->id_empleado,
+            'salario_base' => $nomina->salario_base,
+            'fecha_nomina' => $nomina->fecha_nomina,
+            'horas_extra' => $nomina->horas_extra,
+            'precio_hora_extra' => $nomina->precio_hora_extra,
+            'seg_social' => $nomina->seg_social,
+            'irpf' => $nomina->irpf,
+            'plus_convenio' => $nomina->plus_convenio,
+            'paga_extra' => $nomina->paga_extra,
+            'total' => $nomina->total
+        ],200);
+    }
     /**
      * Show the form for editing the specified resource.
      *
