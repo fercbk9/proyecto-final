@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit {
     error:string;
     cargo:string;
     admin:boolean = false;
+    empleadoElegido:string = '99';
+    empleados:any[];
     constructor(private us:UsuariosService) {
         this.us.getUsuario().subscribe(data => {
             console.log(data);
@@ -28,6 +30,11 @@ export class DashboardComponent implements OnInit {
             if(this.cargo == "ADMIN")
             this.admin = true;
             
+        });
+        this.us.getAllUsers().subscribe(data => {
+            this.empleados = data;
+            console.log(data);
+
         });
 
 
@@ -104,5 +111,10 @@ export class DashboardComponent implements OnInit {
     
 
 }   
+    }
+    registrarNomina()
+    {
+        console.log(this.empleadoElegido);
+        
     }
 }

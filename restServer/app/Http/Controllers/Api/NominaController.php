@@ -53,6 +53,7 @@ class NominaController extends Controller
             'salario_base' => 'required',
             'fecha_nomina' => 'required',
             'horas_extra' => 'required',
+            'precio_hora_extra' => 'required',
             'paga_extra' => 'required'
         ]);
         if ($validator->fails()) {

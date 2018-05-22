@@ -75,15 +75,92 @@
 			<h2>Administrar Nóminas</h2>
 			<hr>
 			<div class="form-group">
-			<label for="inicio">Fecha inicio</label>
-			<input type="text" class="form-control" id="inicio" aria-describedby="emailHelp" placeholder="fecha">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+					  <label class="input-group-text" for="inputGroupSelect03">Empleado</label>
+					</div>
+					<select class="custom-select" id="inputGroupSelect03" name="empleadoElegido" [(ngModel)]="empleadoElegido" placeholder="Elegir Empleado">
+					<option selected disabled value="99">Elegir Empleado</option>
+					<option *ngFor="let i of empleados" [value]="i.id">{{i.nombre}} {{i.apellidos}}</option>
+					</select>
+					</div>
+					
 			</div>
 			<div class="form-group">
-			<label for="fin">Fecha fin</label>
-			<input type="date" class="form-control" id="fin" aria-describedby="emailHelp" placeholder="Fecha">
+					<div class="input-group mb-3">
+							<div class="input-group-prepend">
+							  <label class="input-group-text" for="inputGroupSelect033">Salario Base</label>
+							</div>
+							<input type="number" class="form-control" id="salBase" aria-describedby="emailHelp" placeholder="1000">
+							
+							</div>
+			
 			</div>
 			<div class="form-group">
-			<button type="submit" class="btn btn-primary">Registrar Nómina</button>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+						  <label class="input-group-text" for="inputGroupSelect011">Mes</label>
+						</div>
+						<select class="custom-select" id="inputGroupSelect011" name="mes_elegido" [(ngModel)]="mes_elegido">
+						  <option selected disabled value="99">Eligir Mes</option>
+						  <option value="0">Enero</option>
+						  <option value="1">Febrero</option>
+						  <option value="2">Marzo</option>
+						  <option value="3">Abril</option>
+						  <option value="4">Mayo</option>
+						  <option value="5">Junio</option>
+						  <option value="6">Julio</option>
+						  <option value="7">Agosto</option>
+						  <option value="8">Septiembre</option>
+						  <option value="9">Octubre</option>
+						  <option value="10">Noviembre</option>
+						  <option value="11">Diciembre</option>
+						</select>
+					  </div>
+				</div>
+				<div class="form-group">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+						  <label class="input-group-text" for="inputGroupSelect021">Año</label>
+						</div>
+						<select class="custom-select" id="inputGroupSelect021" name="year_elegido" [(ngModel)]="year_elegido">
+						  <option *ngFor="let i of years">{{i}}</option>
+						</select>
+						</div>
+						
+				</div>
+				<div class="form-group">
+						<div class="input-group mb-3">
+								<div class="input-group-prepend">
+								  <label class="input-group-text" for="horas">Horas Extra</label>
+								</div>
+								<input type="number" class="form-control" id="horas" aria-describedby="emailHelp" placeholder="0">
+								
+								</div>
+				
+				</div>
+				<div class="form-group">
+						<div class="input-group mb-3">
+								<div class="input-group-prepend">
+								  <label class="input-group-text" for="precio_extra">€ Hora Extra</label>
+								</div>
+								<input type="number" class="form-control" id="precio_extra" aria-describedby="emailHelp" placeholder="25">
+								
+								</div>
+				
+				</div>
+				<div class="form-group">
+						<div class="input-group mb-3">
+								<div class="input-group-prepend">
+								  <label class="input-group-text" for="paga">Paga Extra</label>
+								</div>
+								<input type="number" class="form-control" id="paga" aria-describedby="emailHelp" placeholder="1000">
+								
+								</div>
+				
+				</div>
+			<div class="form-group">
+			<button type="submit" class="btn btn-primary" (click)="registrarNomina()">Registrar Nómina</button>
 			</div>
 			
 			</form>
