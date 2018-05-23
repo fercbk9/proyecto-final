@@ -24,6 +24,7 @@ class Users extends Migration
             $table->date('fecha_nacimiento',10);
             $table->string('email',50)->unique();
             $table->string('password',255);
+            $table->integer("dias_restantes");
             $table->rememberToken();
             $table->timestamps();
         });

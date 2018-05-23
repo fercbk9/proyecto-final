@@ -15,6 +15,7 @@ use Illuminate\Http\Resources;
 //Route::post('register', 'Api\AuthController@register');
 Route::group(['middleware' => 'cors'], function(){
     Route::post('login', 'Api\AuthController@login');
+    //Route::post('register', 'Api\UsuariosController@create');
     Route::middleware('jwt.auth')->post('register', 'Api\UsuariosController@create');
     Route::middleware('jwt.auth')->post('logout', 'Api\AuthController@logout');
     Route::get('all', 'Api\UsuariosController@index');
@@ -25,6 +26,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::post('nominas/ver-nomina','Api\NominaController@show');
     Route::post('nominas/cargar_fechas','Api\NominaController@index');
     Route::middleware('jwt.auth')->post('nominas/consultar_nomina','Api\NominaController@consultar');
+    Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@show');
+    Route::middleware('jwt.auth')->post('vacaciones/registrar-vacaciones','Api\VacacionesController@store');
 
 });
 //Route::post('login', 'Api\AuthController@login');

@@ -52,6 +52,13 @@ class UsuariosController extends Controller
         $user->fecha_nacimiento = $input['fecha_nacimiento'];
         $user->email = $input['email'];
         $user->password = bcrypt('123456');
+        $input['password'] = bcrypt($request->get('password'));
+        if (!isset($input['cargo'])){
+            $input['cargo'] = 'EMPLEADO';
+        }
+        $input['dias_restantes'] = 30;
+        $user->cargo = $input['cargo'];
+        $user->dias_restantes = $input['dias_restantes'];
         $user->save();
         //$token =  $user->createToken('f-erp')->accessToken;
 

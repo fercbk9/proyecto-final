@@ -22,6 +22,7 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
+
         ]);
 
         if ($validator->fails()) {
@@ -30,6 +31,11 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($request->get('password'));
+        if (!isset($input['cargo'])){
+            $input['cargo'] = 'EMPLEADO';
+        }
+        $input['dias_restantes'] = 30;
+        dd($input);
         //$user = User::create();
         $user = new User();
         $user->save($input);

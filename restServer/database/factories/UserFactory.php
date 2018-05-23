@@ -19,9 +19,11 @@ $factory->define(App\User::class, function (Faker $faker) {
         'apellidos' => $faker->lastName,
         'direccion' => $faker->address,
         'telefono' => $faker->phoneNumber,
+        'cargo' => $faker->word("EMPLEADO"),
         'fecha_nacimiento' => $faker->date('1997-5-12'),
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('hola'), // secret
         'remember_token' => str_random(10),
+        'dias_restantes' => $faker->numberBetween(30,30)
     ];
 });
