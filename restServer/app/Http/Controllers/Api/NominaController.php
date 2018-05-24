@@ -162,6 +162,7 @@ class NominaController extends Controller
             'paga_extra' => $nomina->paga_extra,
             'total' => $nomina->total
         ],200);
+
     }
     /**
      * Show the form for editing the specified resource.

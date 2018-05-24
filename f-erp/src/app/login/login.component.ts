@@ -17,19 +17,29 @@ export class LoginComponent implements OnInit {
     years:number[] = [];
     constructor(public router: Router, private us:UsuariosService) {
         this.us.fechas_minimas_maximas().subscribe(data => {
-            let fecha_minima = new Date(data['fecha_minima']);
-            let fecha_maxima = new Date(data['fecha_maxima']);
-            console.log(fecha_minima);
-            
-            this.year_minimo = fecha_minima.getFullYear();
-            this.year_maximo = fecha_minima.getFullYear();
-            if(this.year_minimo == this.year_maximo)
-            this.years.push(this.year_minimo);
-            else{
-                for(let i = this.year_maximo; i >= this.year_minimo; i--){
-                    this.years.push(i);
+            let fecha_minima;
+            let fecha_maxima;
+            if(data != undefined){
+                fecha_minima = new Date(data['fecha_minima']);
+                fecha_maxima = new Date(data['fecha_maxima']);
+                console.log(fecha_minima);
+                this.year_minimo = fecha_minima.getFullYear();
+                this.year_maximo = fecha_minima.getFullYear();
+                if(this.year_minimo == this.year_maximo)
+                this.years.push(this.year_minimo);
+                else{
+                    for(let i = this.year_maximo; i >= this.year_minimo; i--){
+                        this.years.push(i);
+                    }
                 }
+            }else{
+                let year_actual = new Date().getFullYear();
+                this.years.push(year_actual);
+
             }
+
+            
+
             localStorage.setItem('years',JSON.stringify(this.years));
 
         })
