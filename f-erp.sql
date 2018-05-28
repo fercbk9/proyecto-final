@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-05-2018 a las 00:06:54
+-- Tiempo de generación: 28-05-2018 a las 16:48:32
 -- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.4
+-- Versión de PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -69,6 +69,13 @@ CREATE TABLE `nominas` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `nominas`
+--
+
+INSERT INTO `nominas` (`id`, `id_empleado`, `salario_base`, `fecha_nomina`, `horas_extra`, `precio_hora_extra`, `seg_social`, `irpf`, `total`, `paga_extra`, `plus_convenio`, `created_at`, `updated_at`) VALUES
+(1, 13, 1500.00, '2018-05-14', 4.00, 25.00, 0.04, 0.07, 2459.60, 1000, 40.00, '2018-05-24 08:53:46', '2018-05-24 08:53:46');
 
 -- --------------------------------------------------------
 
@@ -307,7 +314,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `nominas`
 --
 ALTER TABLE `nominas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `oauth_clients`
