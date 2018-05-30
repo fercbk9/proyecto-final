@@ -9,6 +9,11 @@ import { UsuariosService} from '../../services/usuarios.service';
 })
 export class DashboardComponent implements OnInit {
 
+    ok: string;
+    year_elegidoA: string = '99';
+    mes_elegidoA: any = '99';
+    correcto: string;
+    errorV: string;
     empleado:any;
     model: any = 0;
     mes_elegido:string = "99";
@@ -19,6 +24,12 @@ export class DashboardComponent implements OnInit {
     admin:boolean = false;
     empleadoElegido:string = '99';
     empleados:any[];
+    fecha_v_fin:string = "";
+    fecha_v_inicio:string = "";
+    salario_base:string = "";
+    horas_extra:string = "0";
+    precio_hora_extra:string = "0";
+    paga_extra:string = "";
     constructor(private us:UsuariosService) {
         this.us.getUsuario().subscribe(data => {
             console.log(data);
@@ -114,7 +125,147 @@ export class DashboardComponent implements OnInit {
     }
     registrarNomina()
     {
-        console.log(this.empleadoElegido);
+        if(parseInt(this.salario_base) >= 900){
+            let fecha:string;
+            this.error = ""
+            if(this.year_elegidoA.length != 0 && this.year_elegidoA != '99')
+            {
+                fecha = this.year_elegidoA+"-";
+            
+            switch(this.mes_elegidoA){
+                case '0': 
+                fecha = fecha+"01";
+                break;
+                case '1': 
+                fecha = fecha+"02";
+                break;
+                case '2': 
+                fecha = fecha+"03";
+                break;
+                case '3': 
+                fecha = fecha+"04";
+                break;
+                case '4': 
+                fecha = fecha+"05";
+                break;
+                case '5': 
+                fecha = fecha+"06";
+                break;
+                case '6': 
+                fecha = fecha+"07";
+                break;
+                case '7': 
+                fecha = fecha+"08";
+                break;
+                case '8': 
+                fecha = fecha+"09";
+                break;
+                case '9': 
+                fecha = fecha+"10";
+                break;
+                case '10': 
+                fecha = fecha+"11";
+                break;
+                case '11': 
+                fecha = fecha+"12";
+                break;
+            }
+            fecha = fecha + "-01";
+
+        
+            if(this.empleadoElegido == '99')
+            {
+                this.error = "Elige empleado!";
+                this.ok = "";
+            }else
+            {
+                if(this.horas_extra.length != 0 && this.precio_hora_extra.length == 0)
+                {
+                    this.error = "Si hay horas extras, tienes que haber precio!";
+                    this.ok = "";
+                }else
+                {
+                    if(this.paga_extra.length != 0 && parseInt(this.paga_extra) < 1000)
+                    {
+                        this.error = "La paga tiene que ser mayor!"
+                        this.ok = "";
+                    }else
+                    {
+                        let nomina;
+                        if(this.paga_extra.length == 0){
+                                nomina = {
+                                salario_base: this.salario_base,
+                                id_empleado: this.empleadoElegido,
+                                fecha_nomina: fecha,
+                                horas_extra: this.horas_extra,
+                                precio_hora_extra: this.precio_hora_extra,
+                                paga_extra: "0"
+                            }
+                        }else{
+                            nomina = {
+                                salario_base: this.salario_base,
+                                id_empleado: this.empleadoElegido,
+                                fecha_nomina: fecha,
+                                horas_extra: this.horas_extra,
+                                precio_hora_extra: this.precio_hora_extra,
+                                paga_extra: this.paga_extra
+                            }
+                        }
+
+                        this.us.registrarNomina(nomina).subscribe(data => {
+                            if(data['message-error'])
+                            {
+                                this.error = data['message-error']
+                                this.ok = "";
+                            }else{
+                                this.ok = "Creada la Nomina Correctamente";
+                                this.error = "";
+                            }
+                            
+                        });
+                    }
+                }
+            }
+        }
+        else
+        {
+            this.error = "Elegir fecha válida";
+            this.ok = "";
+        }
+    }else{
+        this.error = "Salario base no puede ser menor que 900€";
+        this.ok = "";
+    }
+    }
+    pidoVacaciones(){
+        if(this.fecha_v_inicio.length > 0 && this.fecha_v_fin.length > 0)
+        {
+            let fecha_inicio = new Date(this.fecha_v_inicio);
+            let fecha_fin = new Date(this.fecha_v_fin);
+            if(fecha_inicio > fecha_fin){
+                this.correcto = ""
+                this.errorV = "Error en las fechas. Revisalas!";
+            }else{
+            this.us.pedirVacaciones(this.fecha_v_inicio,this.fecha_v_fin,localStorage.getItem("id_empleado")).subscribe(data => 
+                {
+                    if(data['message-error'])
+                    {
+                        this.correcto = ""
+                        this.errorV = data['message-error'];
+                        
+                    }else
+                    {
+                        this.errorV = "";
+                        this.correcto = "Vacaciones Asignadas Correctamente!"
+                    }
+                    
+                });
+            }
+        }else
+        {
+            this.errorV = "Error al introducir las fechas!"
+            this.correcto = ""
+        }
         
     }
 }

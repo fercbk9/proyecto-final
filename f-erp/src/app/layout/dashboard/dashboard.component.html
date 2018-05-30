@@ -9,19 +9,25 @@
 	<div class="row">
 		<div class="col-md-6">
 		<div class="col-md-8">
+				<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="errorV">
+						{{errorV}}
+					</div>
+					<div class="alert alert-success col-md-12 text-center" role="alert" *ngIf="correcto">
+							{{correcto}}
+						</div>
 			<form>
 			<h2>Vacaciones</h2>
 			<hr>
 			<div class="form-group">
 			<label for="inicio">Fecha inicio</label>
-			<input type="date" class="form-control" id="inicio" aria-describedby="emailHelp" placeholder="fecha">
+			<input type="date" name="fecha_v_inicio" [(ngModel)]="fecha_v_inicio" class="form-control" id="inicio" aria-describedby="emailHelp" placeholder="fecha">
 			</div>
 			<div class="form-group">
 			<label for="fin">Fecha fin</label>
-			<input type="date" class="form-control" id="fin" aria-describedby="emailHelp" placeholder="Fecha">
+			<input type="date" name="fecha_v_fin" [(ngModel)]="fecha_v_fin" class="form-control" id="fin" aria-describedby="emailHelp" placeholder="Fecha">
 			</div>
 			<div class="form-group">
-			<button type="submit" class="btn btn-primary">Asignar vacaciones</button>
+			<button type="submit" class="btn btn-primary" (click)="pidoVacaciones()">Asignar vacaciones</button>
 			</div>
 			
 			</form>
@@ -71,6 +77,9 @@
 					<button type="submit" class="btn btn-success" (click)="verNomina()">Descargar Nómina</button>
 				</div>
 		</form>
+		<div class="alert alert-success col-md-12 text-center" role="alert" *ngIf="ok">
+				{{ok}}
+			</div>
 		<form *ngIf="admin">
 			<h2>Administrar Nóminas</h2>
 			<hr>
@@ -91,7 +100,7 @@
 							<div class="input-group-prepend">
 							  <label class="input-group-text" for="inputGroupSelect033">Salario Base</label>
 							</div>
-							<input type="number" class="form-control" id="salBase" aria-describedby="emailHelp" placeholder="1000">
+							<input type="number" class="form-control" id="salBase" name="salario_base" [(ngModel)]="salario_base" aria-describedby="emailHelp" placeholder="1000">
 							
 							</div>
 			
@@ -101,7 +110,7 @@
 						<div class="input-group-prepend">
 						  <label class="input-group-text" for="inputGroupSelect011">Mes</label>
 						</div>
-						<select class="custom-select" id="inputGroupSelect011" name="mes_elegido" [(ngModel)]="mes_elegido">
+						<select class="custom-select" id="inputGroupSelect011" name="mes_elegidoA" [(ngModel)]="mes_elegidoA">
 						  <option selected disabled value="99">Eligir Mes</option>
 						  <option value="0">Enero</option>
 						  <option value="1">Febrero</option>
@@ -123,8 +132,9 @@
 						<div class="input-group-prepend">
 						  <label class="input-group-text" for="inputGroupSelect021">Año</label>
 						</div>
-						<select class="custom-select" id="inputGroupSelect021" name="year_elegido" [(ngModel)]="year_elegido">
-						  <option *ngFor="let i of years">{{i}}</option>
+						<select class="custom-select" id="inputGroupSelect021" name="year_elegidoA" [(ngModel)]="year_elegidoA">
+								<option selected disabled value="99">Eligir Año</option>
+								<option *ngFor="let i of years">{{i}}</option>
 						</select>
 						</div>
 						
@@ -134,7 +144,7 @@
 								<div class="input-group-prepend">
 								  <label class="input-group-text" for="horas">Horas Extra</label>
 								</div>
-								<input type="number" class="form-control" id="horas" aria-describedby="emailHelp" placeholder="0">
+								<input type="number" class="form-control" id="horas" name="horas_extra" [(ngModel)]="horas_extra" aria-describedby="emailHelp" placeholder="0">
 								
 								</div>
 				
@@ -144,7 +154,7 @@
 								<div class="input-group-prepend">
 								  <label class="input-group-text" for="precio_extra">€ Hora Extra</label>
 								</div>
-								<input type="number" class="form-control" id="precio_extra" aria-describedby="emailHelp" placeholder="25">
+								<input type="number" class="form-control" name="precio_hora_extra" [(ngModel)]="precio_hora_extra" id="precio_extra" aria-describedby="emailHelp" placeholder="25">
 								
 								</div>
 				
@@ -154,7 +164,7 @@
 								<div class="input-group-prepend">
 								  <label class="input-group-text" for="paga">Paga Extra</label>
 								</div>
-								<input type="number" class="form-control" id="paga" aria-describedby="emailHelp" placeholder="1000">
+								<input type="number" class="form-control" name="paga_extra" [(ngModel)]="paga_extra" id="paga" aria-describedby="emailHelp" placeholder="1000">
 								
 								</div>
 				

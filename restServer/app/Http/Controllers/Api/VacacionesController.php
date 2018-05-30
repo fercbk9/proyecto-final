@@ -58,6 +58,14 @@ class VacacionesController extends Controller
                 'message-error' => 'no existe ese usuario'
             ], 200);
         }
+        $sql = "SELECT * from vacaciones where id_empleado = " . $input['id_empleado'] . " and (fecha_inicio = '" . $input['fecha_inicio'] . "' or fecha_fin = '" . $input['fecha_fin'] . "')";
+        $vacaciones_validate = DB::select($sql);
+
+        if($vacaciones_validate != null){
+            return response()->json([
+                'message-error' => 'Ya existe una de  esas fechas asignada!'
+            ], 200);
+        }
         $date1 = new DateTime($input['fecha_inicio']);
         $date2 = new DateTime($input['fecha_fin']);
         $diff = $date1->diff($date2);
@@ -66,12 +74,17 @@ class VacacionesController extends Controller
                 "message-error" => "No puedes pedir tantos dias"
             ]);
         }
+
         $vacaciones = new Vacaciones();
         $vacaciones->id_empleado = $input['id_empleado'];
         $vacaciones->fecha_inicio = $input['fecha_inicio'];
         $vacaciones->fecha_fin = $input['fecha_fin'];
         $vacaciones->save();
-        $user->dias_restantes = $user->dias_restantes - $diff->days;
+        if($date1 == $date2){
+            $user->dias_restantes = $user->dias_restantes - 1;
+        }else {
+            $user->dias_restantes = $user->dias_restantes - $diff->days;
+        }
         $user->save();
         return response()->json([
             'vacaciones' => "Vacaciones asignadas! $user->name"

@@ -171,5 +171,29 @@ let nomina:any = {
     FileSaver.saveAs(blob, filename);
   });
 }
+registrarNomina(nomina:any){
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+});
+return this.httpCli.post("http://localhost:8000/api/nominas/crear",nomina,{headers:headers}).map(data => {return data})
+}
+
+pedirVacaciones(fecha_inicio:string,fecha_fin:string,id:string){
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/pdf'
+});
+let vacaciones = {
+  id_empleado: id,
+  fecha_inicio: fecha_inicio,
+  fecha_fin: fecha_fin
+}
+return this.httpCli.post("http://localhost:8000/api/vacaciones/registrar-vacaciones",vacaciones,{headers:headers}).map(data => 
+{return data});
+
+}
 
 }

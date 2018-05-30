@@ -67,6 +67,13 @@ class NominaController extends Controller
                 'message-error' => 'no existe ese usuario'
             ], 200);
         }
+        $nomina_validate = DB::select("select * from nominas where id_empleado = ". $input['id_empleado'] . " and fecha_nomina = '". $input['fecha_nomina'] ."'");
+        if($nomina_validate != null)
+        {
+            return response()->json([
+                'message-error' => 'Ya tiene nómina para ese mes!'
+            ], 200);
+        }
         $nomina = new Nomina();
         $nomina->id_empleado = $input['id_empleado'];
         $nomina->salario_base = $input['salario_base'];
