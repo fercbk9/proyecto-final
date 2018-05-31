@@ -8,7 +8,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-		<div class="col-md-8">
+		<div class="col-md-10">
 				<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="errorV">
 						{{errorV}}
 					</div>
@@ -33,6 +33,10 @@
 			</form>
 		</div>
 		</div>
+
+
+
+		<!--Nominas para los empleados-->
 		<div class="col-md-4">
 				<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="error">
 						{{error}}
@@ -41,7 +45,7 @@
 					<h2>Nóminas</h2>
 					<hr>
 				<div class="form-group">
-					<div class="input-group mb-3">
+					<div class="input-group mb-8">
 						<div class="input-group-prepend">
 						  <label class="input-group-text" for="inputGroupSelect01">Mes</label>
 						</div>
@@ -63,7 +67,7 @@
 					  </div>
 				</div>
 				<div class="form-group">
-					<div class="input-group mb-3">
+					<div class="input-group mb-8">
 						<div class="input-group-prepend">
 						  <label class="input-group-text" for="inputGroupSelect02">Año</label>
 						</div>
@@ -77,6 +81,32 @@
 					<button type="submit" class="btn btn-success" (click)="verNomina()">Descargar Nómina</button>
 				</div>
 		</form>
+	</div>
+
+
+	<!--Lista De Vacaciones Que tiene cada empleado-->
+	<div class="col-md-6" *ngIf="listado_vacaciones">
+		<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="error">
+				{{error}}
+			</div>
+	
+			<h2>Lista Vacaciones</h2>
+			<hr>
+			<div class="list-group">
+				<a *ngFor="let i of vacaciones" class="list-group-item list-group-item-action">Inicio: {{i['fecha_inicio']}} |  Fin: {{i['fecha_fin']}}</a>
+			</div>
+
+
+
+</div>
+
+
+
+
+
+
+		<!--Administrar Nominas solo para Usuarios Admin-->
+		<div class="col-md-6">
 		<div class="alert alert-success col-md-12 text-center" role="alert" *ngIf="ok">
 				{{ok}}
 			</div>
@@ -175,5 +205,6 @@
 			
 			</form>
 		</div>
+		
 	</div>
 </div>

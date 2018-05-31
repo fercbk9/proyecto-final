@@ -15,6 +15,7 @@ class CreateInventariosTable extends Migration
     {
         Schema::create('inventarios', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("codigo",15)->unique();
             $table->string("descripcion",150);
             $table->string("peso_unidad",10);
             $table->integer("cantidad_stock");

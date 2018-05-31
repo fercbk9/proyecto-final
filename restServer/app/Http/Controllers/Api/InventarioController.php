@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use App\Http\Controllers\Controller;
 use App\Inventario;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\In;
+
 
 class InventarioController extends Controller
 {
@@ -14,7 +16,10 @@ class InventarioController extends Controller
      */
     public function index()
     {
-        //
+        //Mostraremos todos los inventarios paginados.
+        return response()->json([
+           'articulos' => Inventario::all()
+        ]);
     }
 
     /**
@@ -44,9 +49,11 @@ class InventarioController extends Controller
      * @param  \App\Inventario  $inventario
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventario $inventario)
+    public function show()
     {
-        //
+        //Exportaremos a excel
+
+
     }
 
     /**

@@ -1,78 +1,159 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Charts'" [icon]="'fa-bar-chart-o'"></app-page-header>
-    <!--<div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Bar Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Update</button>
-                </div>
+    <app-page-header [heading]="'Inventario'" [icon]="'fa-bar-chart-o'"></app-page-header>
+    <div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="eliminado">
+        Articulo eliminado
+      </div>
+      <div class="alert alert-success col-md-12 text-center" role="alert" *ngIf="editado">
+        Articulo Actualizado
+      </div>
+      <div class="alert alert-primary col-md-12 text-center" role="alert" *ngIf="alta">
+        Articulo dado de Alta
+      </div>
+
+    <h1 class="text-muted" style="float: left;">Administración de Iventarios</h1>
+		<div class="col-md-2 darAlta" style="float: right;">
+
+			<button  type="button" (click)="vaciamosCampos()" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal5">
+				Alta Artículo
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel5">{{tipo}} Articulo</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="vaciamosCampos()">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+								<label for="cod">Código</label>
+								<div class="input-group mb-4">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1">@</span>
+								</div>
+								<input type="text" class="form-control" id="cod" placeholder="Codigo" name="codigo" [(ngModel)]="codigo">
+								</div>
+								</div>
+								<div class="form-group">
+								<label for="desc">Descripción </label>
+								<div class="input-group mb-4">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+									</div>
+
+								<input type="text" class="form-control" id="desc" placeholder="Descripcion" name="descripcion" [(ngModel)]="descripcion">
+								</div>
+								</div>
+								<div class="form-group">
+								<label for="peso">Pesp/Ud Kg </label>
+								<div class="input-group mb-4">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+									</div>
+
+								<input type="text" class="form-control" id="peso" placeholder="Peso" name="peso_unidad" [(ngModel)]="peso_unidad">
+								</div>
+								</div>
+								<div class="form-group">
+								<label for="can">Cantidad Stock </label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-location-arrow"></i></span>
+									</div>
+
+								<input type="text" class="form-control" id="can" placeholder="Cantidad" name="cantidad" [(ngModel)]="cantidad">
+								</div>
+
+
+								<label for="pre">Precio </label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
+									</div>
+
+								<input type="text" class="form-control" id="pre" placeholder="Precio" name="precio" [(ngModel)]="precio">
+								</div>
+								</div>
+
+								<div class="form-group">
+
+
+								</div>
+						</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal" (click)="vaciamosCampos()">Cancelar</button>
+							<button type="button" class="btn btn-success" (click)="darAlta()" data-dismiss="modal">Guardar Articulo</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+                    </div>
+                
             </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Doughnut Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="180px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
+    <div class="row" style="clear: both;">
+
+				<div class="col-md-12">
+					<h3>Listado de Articulos</h3>
+
+
+						<table class="table table-responsive table-hover " *ngIf="cargado">
+								<thead>
+								<tr>
+										<th>#</th>
+										<th>Codigo</th>
+										<th>Descripcion</th>
+										<th>Peso/Ud Kg</th>
+										<th>Cantidad Stock</th>
+										<th>Precio</th>
+										<th >Borrar</th>
+										<th >Editar</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr *ngFor="let articulo of articulos; let i = index">
+										<th scope="row">{{i+1}}</th>
+										<td>{{articulo.codigo}}</td>
+										<td>{{articulo.descripcion}}</td>
+										<td>{{articulo.peso_unidad}}Kg</td>
+										<td>{{articulo.cantidad_stock}}</td>
+										<td>{{articulo.precio}}€</td>
+										<td ><button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalBorrar" (click)="index=i" >Eliminar</button></td>
+										<td ><button class="btn btn-success" (click)="editar(i)" data-toggle="modal" data-target="#exampleModal5">Editar</button></td>
+								</tr>
+
+								</tbody>
+						</table>
+
+				</div>
     </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Radar Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="150px" [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Pie Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
+
+
+
+
+
+<div class="modal fade" id="exampleModalBorrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelBorrar" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabelBorrar">Eliminar Articulo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que quieres eliminar este Articulo?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="borrar()" data-dismiss="modal">Borrar</button>
+      </div>
     </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Polar Area Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="130px" [data]="polarAreaChartData" [labels]="polarAreaChartLabels" [legend]="polarAreaLegend" [chartType]="polarAreaChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Line Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-    </div>-->
+  </div>
 </div>

@@ -26,9 +26,10 @@ Route::group(['middleware' => 'cors'], function(){
     Route::post('nominas/ver-nomina','Api\NominaController@show');
     Route::post('nominas/cargar_fechas','Api\NominaController@index');
     Route::middleware('jwt.auth')->post('nominas/consultar_nomina','Api\NominaController@consultar');
-    Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@show');
+    //Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@show');
     Route::middleware('jwt.auth')->post('vacaciones/registrar-vacaciones','Api\VacacionesController@store');
-
+    Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@index');
+    Route::post('inventario/articulos','Api\InventarioController@index');
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {

@@ -18,9 +18,31 @@ class VacacionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id_empleado' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 422);
+        }
+        $input = $request->all();
+        $user = User::query("select * from users where id = ".$input['id_empleado'])->find($input['id_empleado']);
+        //verificamos  que existe el usuario
+        if(empty($user)){
+            return response()->json([
+                'message-error' => 'no existe ese usuario'
+            ], 200);
+        }
+        $vacaciones_validate = DB::select("select * from vacaciones where id_empleado = '" . $input['id_empleado'] . "'");
+        if($vacaciones_validate == null){
+            return response()->json([
+                'message-error' => 'No hay vacaciones!'
+            ], 200);
+        }
+        return response()->json([
+           'vacaciones' => $vacaciones_validate
+        ]);
     }
 
     /**

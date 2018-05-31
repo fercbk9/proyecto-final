@@ -196,4 +196,27 @@ return this.httpCli.post("http://localhost:8000/api/vacaciones/registrar-vacacio
 
 }
 
+listarVacaciones(id:string)
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  let vacaciones:any = {
+    id_empleado: id
+  }
+  return this.httpCli.post("http://localhost:8000/api/vacaciones/ver-vacaciones",vacaciones,{headers:headers}).map(data => {return data});
+}
+
+listarArticulos()
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  return this.httpCli.post("http://localhost:8000/api/inventario/articulos",{headers:headers}).map(data => {return data});
+}
+
 }

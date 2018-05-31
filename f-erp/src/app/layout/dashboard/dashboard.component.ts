@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit {
     horas_extra:string = "0";
     precio_hora_extra:string = "0";
     paga_extra:string = "";
+    listado_vacaciones:boolean = false;
+    vacaciones:any[];
     constructor(private us:UsuariosService) {
         this.us.getUsuario().subscribe(data => {
             console.log(data);
@@ -40,6 +42,21 @@ export class DashboardComponent implements OnInit {
             this.cargo = localStorage.getItem("cargo");
             if(this.cargo == "ADMIN")
             this.admin = true;
+            this.us.listarVacaciones(data['user'].id).subscribe(datas =>{
+            
+                if(datas['vacaciones'] == null){
+                    this.vacaciones = [];
+                    this.listado_vacaciones = false;
+                }else{
+                    this.vacaciones = datas['vacaciones'];
+                    console.log(this.vacaciones);
+                    this.listado_vacaciones = true;
+                }
+                
+                
+                
+            });
+    
             
         });
         this.us.getAllUsers().subscribe(data => {
@@ -47,7 +64,7 @@ export class DashboardComponent implements OnInit {
             console.log(data);
 
         });
-
+        
 
     }
 
@@ -257,6 +274,21 @@ export class DashboardComponent implements OnInit {
                     {
                         this.errorV = "";
                         this.correcto = "Vacaciones Asignadas Correctamente!"
+                        this.us.listarVacaciones(localStorage.getItem('id_empleado')).subscribe(datas =>{
+            
+                            if(datas['vacaciones'] == null){
+                                this.vacaciones = [];
+                                this.listado_vacaciones = false;
+                            }else{
+                                this.vacaciones = datas['vacaciones'];
+                                console.log(this.vacaciones);
+                                this.listado_vacaciones = true;
+                            }
+                            
+                            
+                            
+                        });
+
                     }
                     
                 });
