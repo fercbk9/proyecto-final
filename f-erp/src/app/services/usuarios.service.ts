@@ -218,5 +218,42 @@ listarArticulos()
   });
   return this.httpCli.post("http://localhost:8000/api/inventario/articulos",{headers:headers}).map(data => {return data});
 }
+altaArticulos(articulo:any)
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  return this.httpCli.post("http://localhost:8000/api/inventario/crear",articulo,{headers:headers}).map(data => {return data});
+}
+editarArticulos(articulo:any)
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  return this.httpCli.post("http://localhost:8000/api/inventario/editar",articulo,{headers:headers}).map(data => {return data});
+}
+borrarArticulos(articulo:any)
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  return this.httpCli.post("http://localhost:8000/api/inventario/borrar",articulo,{headers:headers}).map(data => {return data});
+}
+consultaArticulo(articulo:any)
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+  return this.httpCli.post("http://localhost:8000/api/inventario/buscar",articulo,{headers:headers}).map(data => {return data});
+
+}
 
 }

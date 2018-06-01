@@ -9,7 +9,14 @@
       <div class="alert alert-primary col-md-12 text-center" role="alert" *ngIf="alta">
         Articulo dado de Alta
       </div>
-
+			<div class="col-md-8" style="float: right">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" (keyup)="buscarArticulo()" placeholder="Buscar producto por codigo" aria-label="Recipient's username" name="cod_buscar" [(ngModel)]="cod_buscar" aria-describedby="basic-addon2">
+					<div class="input-group-append">
+						<button class="btn btn-outline-primary" type="button" >Buscar</button>
+					</div>
+				</div>
+			</div>
     <h1 class="text-muted" style="float: left;">Administración de Iventarios</h1>
 		<div class="col-md-2 darAlta" style="float: right;">
 
@@ -95,7 +102,10 @@
 
                     </div>
                 
-            </div>
+						</div>
+
+
+						
     <div class="row" style="clear: both;">
 
 				<div class="col-md-12">

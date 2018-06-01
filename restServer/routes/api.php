@@ -33,6 +33,7 @@ Route::group(['middleware' => 'cors'], function(){
     Route::post('inventario/crear','Api\InventarioController@store');
     Route::post('inventario/editar','Api\InventarioController@update');
     Route::post('inventario/borrar','Api\InventarioController@destroy');
+    Route::post('inventario/buscar','Api\InventarioController@show');
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {

@@ -77,9 +77,27 @@ class InventarioController extends Controller
      * @param  \App\Inventario  $inventario
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        //Exportaremos a excel
+
+        $validator = Validator::make($request->all(), [
+            'codigo' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        $input = $request->all();
+        $inventario = DB::select("select * from inventarios where codigo is like = '%".$input['codigo']."%'");
+        if($inventario == null)
+        {
+            return response()->json([
+                'message-error' => 'No existe ese codigo de producto!'
+            ], 200);
+        }
+        return response()->json([
+            'articulos' => $inventario
+        ], 200);
+
 
 
     }

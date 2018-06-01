@@ -24,6 +24,7 @@ export class ChartsComponent implements OnInit {
     id:number;
     articulos:any[];
     cargado:boolean = false;
+    cod_buscar:string = "";
     constructor(private us:UsuariosService) 
     {
         this.getArticulos();
@@ -42,7 +43,7 @@ export class ChartsComponent implements OnInit {
                 id: this.id
 
             }
-            this.us.editar(articulo).subscribe(data => {
+            this.us.editarArticulos(articulo).subscribe(data => {
               console.log(data);
               this.editado = true;
             });
@@ -57,7 +58,7 @@ export class ChartsComponent implements OnInit {
                 
                 id: this.id
             }
-            this.us.alta(articulo).subscribe(data => {
+            this.us.altaArticulos(articulo).subscribe(data => {
               console.log(data);
               this.alta = true;
             });
@@ -87,7 +88,10 @@ export class ChartsComponent implements OnInit {
     }
     borrar(){
         this.id = this.articulos[this.index].id;
-        this.us.borrar(this.id).subscribe(data => {console.log(data);this.eliminado=true});
+        let articulo = {
+            id: this.id
+        }
+        this.us.borrarArticulos(articulo).subscribe(data => {console.log(data);this.eliminado=true});
         setTimeout(() => {
           this.getArticulos();
           this.eliminado = false;
@@ -113,6 +117,20 @@ export class ChartsComponent implements OnInit {
         this.precio = "";
         this.tipo = "Alta";
     }
-
+    buscarArticulo()
+    {
+      if(this.cod_buscar != "")
+      {
+        let articulo = {
+            codigo: this.cod_buscar
+        }
+        this.us.consultaArticulo(articulo).subscribe(data => {
+            this.articulos = data['articulos'];
+        });
+      }else{
+          this.getArticulos();
+      }  
+        
+    }
     ngOnInit() {}
 }
