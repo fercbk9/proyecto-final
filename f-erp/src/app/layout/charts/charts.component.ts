@@ -76,11 +76,11 @@ export class ChartsComponent implements OnInit {
     {
         console.log(id);
         this.edito = true;
-        this.codigo = this.articulos[id].nombre;
-        this.descripcion = this.articulos[id].apellidos;
-        this.peso_unidad = this.articulos[id].email;
-        this.cantidad = this.articulos[id].direccion;
-        this.precio = this.articulos[id].telefono;
+        this.codigo = this.articulos[id].codigo;
+        this.descripcion = this.articulos[id].descripcion;
+        this.peso_unidad = this.articulos[id].peso_unidad;
+        this.cantidad = this.articulos[id].cantidad_stock;
+        this.precio = this.articulos[id].precio;
         this.id = this.articulos[id].id;
         this.tipo = "Modificar";
         

@@ -30,6 +30,9 @@ Route::group(['middleware' => 'cors'], function(){
     Route::middleware('jwt.auth')->post('vacaciones/registrar-vacaciones','Api\VacacionesController@store');
     Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@index');
     Route::post('inventario/articulos','Api\InventarioController@index');
+    Route::post('inventario/crear','Api\InventarioController@store');
+    Route::post('inventario/editar','Api\InventarioController@update');
+    Route::post('inventario/borrar','Api\InventarioController@destroy');
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {
