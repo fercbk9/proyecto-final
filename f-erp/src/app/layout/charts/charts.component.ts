@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { UsuariosService} from '../../services/usuarios.service';
+import { log } from 'util';
 
 @Component({
     selector: 'app-charts',
@@ -131,6 +132,10 @@ export class ChartsComponent implements OnInit {
           this.getArticulos();
       }  
         
+    }
+    exportar()
+    {
+        this.us.exportar().subscribe(data => console.log(data));
     }
     ngOnInit() {}
 }

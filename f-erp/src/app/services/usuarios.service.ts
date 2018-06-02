@@ -255,5 +255,24 @@ consultaArticulo(articulo:any)
   return this.httpCli.post("http://localhost:8000/api/inventario/buscar",articulo,{headers:headers}).map(data => {return data});
 
 }
+exportar()
+{
+  let headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Content-Type': 'application/vnd.ms-excel; charset=UTF-8',
+    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+});
+
+  let options = new RequestOptions({headers:this.headers});
+  options.responseType = ResponseContentType.Blob;
+  return this._http.post("http://localhost:8000/api/inventario/exportar",options).map(data => {
+    let fileBlob = data.blob();
+    let blob = new Blob([fileBlob], { 
+       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // must match the Accept type
+    });
+    let filename = 'inventario.xlsx';
+    FileSaver.saveAs(blob, filename);
+  });
+}
 
 }

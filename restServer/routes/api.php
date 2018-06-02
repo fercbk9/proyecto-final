@@ -29,11 +29,12 @@ Route::group(['middleware' => 'cors'], function(){
     //Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@show');
     Route::middleware('jwt.auth')->post('vacaciones/registrar-vacaciones','Api\VacacionesController@store');
     Route::middleware('jwt.auth')->post('vacaciones/ver-vacaciones','Api\VacacionesController@index');
-    Route::post('inventario/articulos','Api\InventarioController@index');
-    Route::post('inventario/crear','Api\InventarioController@store');
-    Route::post('inventario/editar','Api\InventarioController@update');
-    Route::post('inventario/borrar','Api\InventarioController@destroy');
-    Route::post('inventario/buscar','Api\InventarioController@show');
+    Route::middleware('jwt.auth')->post('inventario/articulos','Api\InventarioController@index');
+    Route::middleware('jwt.auth')->post('inventario/crear','Api\InventarioController@store');
+    Route::middleware('jwt.auth')->post('inventario/editar','Api\InventarioController@update');
+    Route::middleware('jwt.auth')->post('inventario/borrar','Api\InventarioController@destroy');
+    Route::middleware('jwt.auth')->post('inventario/buscar','Api\InventarioController@show');
+    Route::post('inventario/exportar','Api\InventarioController@exportar');
 });
 //Route::post('login', 'Api\AuthController@login');
 /*Route::group(['middleware' => 'auth:api'], function () {

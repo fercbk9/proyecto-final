@@ -6,6 +6,7 @@ use App\Inventario;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\In;
 use Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\DB;
 class InventarioController extends Controller
@@ -87,7 +88,7 @@ class InventarioController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
         $input = $request->all();
-        $inventario = DB::select("select * from inventarios where codigo is like = '%".$input['codigo']."%'");
+        $inventario = DB::select("select * from inventarios where codigo like '%".$input['codigo']."%'");
         if($inventario == null)
         {
             return response()->json([
@@ -172,6 +173,18 @@ class InventarioController extends Controller
         return response()->json([
             'message' => 'Articulo Borrado Correctamente'
         ],200);
+    }
+    public function exportar()
+    {
+        //\Maatwebsite\Excel\Facades\Excel::download(Inventario::all(),'inventario','Xlsx');
+        Excel::create('Laravel Excel', function($excel) {
+            $excel->sheet('Excel sheet', function($sheet) {
+                //otra opción -> $products = Product::select('name')->get();
+                $products = Inventario::all();
+                $sheet->fromArray($products);
+                $sheet->setOrientation('landscape');
+            });
+        })->download('xls');
     }
 
 }
