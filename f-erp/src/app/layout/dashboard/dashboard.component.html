@@ -86,9 +86,7 @@
 
 	<!--Lista De Vacaciones Que tiene cada empleado-->
 	<div class="col-md-6" *ngIf="listado_vacaciones">
-		<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="error">
-				{{error}}
-			</div>
+
 	
 			<h2>Lista Vacaciones</h2>
 			<hr>
@@ -109,6 +107,9 @@
 		<div class="col-md-6">
 		<div class="alert alert-success col-md-12 text-center" role="alert" *ngIf="ok">
 				{{ok}}
+			</div>
+			<div class="alert alert-danger col-md-12 text-center" role="alert" *ngIf="errorN">
+				{{errorN}}
 			</div>
 		<form *ngIf="admin">
 			<h2>Administrar Nóminas</h2>

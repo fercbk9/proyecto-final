@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { UsuariosService} from '../../services/usuarios.service';
 import { log } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-charts',
@@ -26,7 +27,7 @@ export class ChartsComponent implements OnInit {
     articulos:any[];
     cargado:boolean = false;
     cod_buscar:string = "";
-    constructor(private us:UsuariosService) 
+    constructor(private us:UsuariosService, private _routes:Router) 
     {
         this.getArticulos();
     }
@@ -135,7 +136,8 @@ export class ChartsComponent implements OnInit {
     }
     exportar()
     {
-        this.us.exportar().subscribe(data => console.log(data));
+        //this.us.exportar().subscribe(data => console.log(data));
+        //this._routes.navigate(['http://localhost:8000/inventario/exportar']);
     }
     ngOnInit() {}
 }

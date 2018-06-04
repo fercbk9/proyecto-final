@@ -149,6 +149,7 @@ class UsuariosController extends Controller
         $cosas['fecha_nacimiento'] = $input['fecha_nacimiento'];
         $cosas['direccion'] = $input['direccion'];
         $cosas['telefono'] = $input['telefono'];
+        $cosas['cargo'] = $input['cargo'];
         if(isset($input['password'])){
             $cosas['password'] = bcrypt($input['password']);
         }

@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
     paga_extra:string = "";
     listado_vacaciones:boolean = false;
     vacaciones:any[];
+    errorN:string = "";
     constructor(private us:UsuariosService) {
         this.us.getUsuario().subscribe(data => {
             console.log(data);
@@ -144,7 +145,7 @@ export class DashboardComponent implements OnInit {
     {
         if(parseInt(this.salario_base) >= 900){
             let fecha:string;
-            this.error = ""
+            this.errorN = ""
             if(this.year_elegidoA.length != 0 && this.year_elegidoA != '99')
             {
                 fecha = this.year_elegidoA+"-";
@@ -198,13 +199,13 @@ export class DashboardComponent implements OnInit {
             {
                 if(this.horas_extra.length != 0 && this.precio_hora_extra.length == 0)
                 {
-                    this.error = "Si hay horas extras, tienes que haber precio!";
+                    this.errorN = "Si hay horas extras, tienes que haber precio!";
                     this.ok = "";
                 }else
                 {
                     if(this.paga_extra.length != 0 && parseInt(this.paga_extra) < 1000)
                     {
-                        this.error = "La paga tiene que ser mayor!"
+                        this.errorN = "La paga tiene que ser mayor!"
                         this.ok = "";
                     }else
                     {
@@ -232,7 +233,7 @@ export class DashboardComponent implements OnInit {
                         this.us.registrarNomina(nomina).subscribe(data => {
                             if(data['message-error'])
                             {
-                                this.error = data['message-error']
+                                this.errorN = data['message-error']
                                 this.ok = "";
                             }else{
                                 this.ok = "Creada la Nomina Correctamente";
@@ -246,11 +247,11 @@ export class DashboardComponent implements OnInit {
         }
         else
         {
-            this.error = "Elegir fecha válida";
+            this.errorN = "Elegir fecha válida";
             this.ok = "";
         }
     }else{
-        this.error = "Salario base no puede ser menor que 900€";
+        this.errorN = "Salario base no puede ser menor que 900€";
         this.ok = "";
     }
     }

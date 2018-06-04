@@ -25,6 +25,7 @@ export class TablesComponent implements OnInit {
     alta:boolean = false;
     editado:boolean = false;
     cargado:boolean = false;
+    cargo:string = '';
     constructor(private us:UsuariosService) {
       this.getUsers();
       let cargo = localStorage.getItem("cargo");
@@ -53,6 +54,7 @@ export class TablesComponent implements OnInit {
         this.telefono = this.empleados[id].telefono;
         this.fecha = this.empleados[id].fecha_nacimiento;
         this.id = this.empleados[id].id;
+        this.cargo = this.empleados[id].cargo;
         this.tipo = "Modificar";
         
     }
@@ -67,7 +69,8 @@ export class TablesComponent implements OnInit {
                 fecha_nacimiento : this.fecha,
                 direccion: this.direccion,
                 telefono: this.telefono,
-                id: this.id
+                id: this.id,
+                cargo: this.cargo.toUpperCase()
 
             }
             this.us.editar(empleado).subscribe(data => {
@@ -82,7 +85,8 @@ export class TablesComponent implements OnInit {
               email: this.email,
               fecha_nacimiento : this.fecha,
               direccion: this.direccion,
-              telefono: this.telefono
+              telefono: this.telefono,
+              cargo: this.cargo.toUpperCase()
             }
             this.us.alta(empleado).subscribe(data => {
               console.log(data);
