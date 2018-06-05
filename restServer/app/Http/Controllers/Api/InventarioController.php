@@ -176,8 +176,10 @@ class InventarioController extends Controller
     }
     public function exportar()
     {
+        $date = new \DateTime();
+
         //\Maatwebsite\Excel\Facades\Excel::download(Inventario::all(),'inventario','Xlsx');
-        Excel::create('Laravel Excel', function($excel) {
+        Excel::create('Inventario-'.$date->format('d-m-y'), function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
                 $products = Inventario::all();

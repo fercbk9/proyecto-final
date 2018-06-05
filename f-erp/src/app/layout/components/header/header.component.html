@@ -6,7 +6,7 @@
     </button>
     <div class="collapse navbar-collapse">
         
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto mr-5">
 		
             <!--<li class="nav-item d-none d-xl-block">
                 <a
@@ -24,8 +24,8 @@
                 >
                     RTL/LTR
                 </a>
-            </li> -->&nbsp;
-            <li class="nav-item dropdown" ngbDropdown>
+            </li> -->
+            <!--<li class="nav-item dropdown" ngbDropdown>
                 <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
                     <i class="fa fa-envelope"></i> <b class="caret"></b><span class="sr-only">(current)</span>
                 </a>
@@ -64,9 +64,23 @@
                     </li>
                 </ul>
             </li>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="{{ 'Search' | translate }}" >
-			</form>
+
+
+        -->
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-user"></i> {{user.nombre}} <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a data-toggle="modal" href="#exModal" class="dropdown-item" (click)="cargamosPerfil()">
+                        <i class="fa fa-fw fa-user"></i> {{ 'Perfil' | translate }}
+                    </a>
+                    <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                        <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
+                    </a>
+                </div>
+            </li>
+            
             <!--<li class="nav-item dropdown" ngbDropdown>
                 <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
                     <i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span>
@@ -119,19 +133,7 @@
                 </div>
             </li>
 			-->
-            <li class="nav-item dropdown" ngbDropdown>
-                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                    <i class="fa fa-user"></i> {{user.nombre}} <b class="caret"></b>
-                </a>
-                <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a data-toggle="modal" href="#exModal" class="dropdown-item" (click)="cargamosPerfil()">
-                        <i class="fa fa-fw fa-user"></i> {{ 'Perfil' | translate }}
-                    </a>
-                    <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
-                        <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
-                    </a>
-                </div>
-            </li>
+
         </ul>
     </div>
 </nav>

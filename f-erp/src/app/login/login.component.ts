@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
     year_minimo:number;
     year_maximo:number;
     years:number[] = [];
+    msj:string ="";
+    $: any;
     constructor(public router: Router, private us:UsuariosService) {
         this.us.fechas_minimas_maximas().subscribe(data => {
             let fecha_minima;
@@ -59,6 +61,10 @@ export class LoginComponent implements OnInit {
                 
         }
         this.router.navigate(['/dashboard']);
+    },error => {
+        this.msj = "Error en el login";
+        document.getElementById("boton").click(); 
+        //let $("exampleModalLogin").modal('show');
     });
 
     

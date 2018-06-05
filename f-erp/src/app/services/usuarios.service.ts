@@ -149,7 +149,7 @@ return this.httpCli.post("http://localhost:8000/api/nominas/consultar_nomina",no
 
 
 
-verNomina(fecha:string,id:string)
+verNomina(fecha:string,id:string,nombre:String)
 {
   let headers = new HttpHeaders({
     'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -167,7 +167,8 @@ let nomina:any = {
     let blob = new Blob([fileBlob], { 
        type: 'application/pdf' // must match the Accept type
     });
-    let filename = fecha+'.pdf';
+    
+    let filename =  nombre+'-nomina_' + fecha + '.pdf';
     FileSaver.saveAs(blob, filename);
   });
 }

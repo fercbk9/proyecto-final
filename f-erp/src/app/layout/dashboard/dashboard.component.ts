@@ -14,7 +14,8 @@ export class DashboardComponent implements OnInit {
     mes_elegidoA: any = '99';
     correcto: string;
     errorV: string;
-    empleado:any;
+    empleado:any = {};
+    nombre
     model: any = 0;
     mes_elegido:string = "99";
     year_elegido:string
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
             this.years = JSON.parse(localStorage.getItem('years'));
             this.year_elegido = this.years[0].toString();
             this.cargo = localStorage.getItem("cargo");
+            this.empleado = data['user'];
             if(this.cargo == "ADMIN")
             this.admin = true;
             this.us.listarVacaciones(data['user'].id).subscribe(datas =>{
@@ -129,7 +131,7 @@ export class DashboardComponent implements OnInit {
             this.error = "No tienes nominas en ese mes"
         }
         if(this.error == "" || this.error == undefined){
-            this.us.verNomina(fecha,localStorage.getItem('id_empleado')).subscribe(data => data);
+            this.us.verNomina(fecha,localStorage.getItem('id_empleado'),this.empleado['nombre']).subscribe(data => data);
         }
         
     });
