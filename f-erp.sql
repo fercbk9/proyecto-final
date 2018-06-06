@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2018 a las 16:48:32
+-- Tiempo de generación: 07-06-2018 a las 01:27:01
 -- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.3
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,34 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `f-erp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inventarios`
+--
+
+CREATE TABLE `inventarios` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `codigo` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `peso_unidad` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cantidad_stock` int(11) NOT NULL,
+  `precio` double(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `inventarios`
+--
+
+INSERT INTO `inventarios` (`id`, `codigo`, `descripcion`, `peso_unidad`, `cantidad_stock`, `precio`, `created_at`, `updated_at`) VALUES
+(3, '570564', 'AGUACATE HASS  GRANEL KG', '1,5', 2, 2.50, NULL, '2018-06-05 11:33:04'),
+(4, '570711', 'CHAMPIÑON CORTADO P.K.', '0.5', 15, 1.35, '2018-05-30 22:00:00', '2018-05-30 22:00:00'),
+(5, '570097', 'CILANTRO MANOJO P.U.', '0.2', 5, 0.35, NULL, '2018-06-01 18:33:48'),
+(6, '500010', 'MAGDALENAS BOLSA', '1.25', 12, 1.00, '2018-06-01 06:35:05', '2018-06-01 06:35:05'),
+(7, '12315', 'galletas', '1.4', 2, 1.30, '2018-06-06 19:52:36', '2018-06-06 19:52:36');
 
 -- --------------------------------------------------------
 
@@ -46,7 +74,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (39, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
 (40, '2018_05_02_145501_users', 1),
 (41, '2018_05_14_143257_create_nominas_table', 1),
-(42, '2018_05_23_185846_create_vacaciones_table', 1);
+(42, '2018_05_23_185846_create_vacaciones_table', 1),
+(44, '2018_05_30_202953_create_inventarios_table', 2);
 
 -- --------------------------------------------------------
 
@@ -75,7 +104,14 @@ CREATE TABLE `nominas` (
 --
 
 INSERT INTO `nominas` (`id`, `id_empleado`, `salario_base`, `fecha_nomina`, `horas_extra`, `precio_hora_extra`, `seg_social`, `irpf`, `total`, `paga_extra`, `plus_convenio`, `created_at`, `updated_at`) VALUES
-(1, 13, 1500.00, '2018-05-14', 4.00, 25.00, 0.04, 0.07, 2459.60, 1000, 40.00, '2018-05-24 08:53:46', '2018-05-24 08:53:46');
+(1, 13, 1500.00, '2018-05-01', 4.00, 25.00, 0.04, 0.07, 2459.60, 1000, 40.00, '2018-05-24 08:53:46', '2018-05-24 08:53:46'),
+(2, 12, 1200.00, '2018-05-30', 2.00, 10.00, 0.04, 0.07, 1121.40, 0, 40.00, '2018-05-30 17:06:36', '2018-05-30 17:06:36'),
+(3, 12, 1220.00, '2018-06-01', 1.00, 10.00, 0.04, 0.07, 2130.30, 1000, 40.00, '2018-05-30 17:07:27', '2018-05-30 17:07:27'),
+(4, 10, 1200.00, '2018-06-01', 2.00, 10.00, 0.04, 0.07, 2121.40, 1000, 40.00, '2018-05-30 17:56:53', '2018-05-30 17:56:53'),
+(5, 4, 1200.00, '2018-11-01', 0.00, 0.00, 0.04, 0.07, 1103.60, 0, 40.00, '2018-05-30 18:03:35', '2018-05-30 18:03:35'),
+(6, 8, 1200.00, '2018-06-01', 0.00, 0.00, 0.04, 0.07, 1103.60, 0, 40.00, '2018-06-01 06:12:07', '2018-06-01 06:12:07'),
+(7, 3, 1000.00, '2018-12-01', 18.00, 10.00, 0.04, 0.07, 1085.80, 0, 40.00, '2018-06-04 17:47:33', '2018-06-04 17:47:33'),
+(8, 12, 1201.00, '2018-09-01', 0.00, 0.00, 0.04, 0.07, 2104.49, 1000, 40.00, '2018-06-06 19:43:26', '2018-06-06 19:43:26');
 
 -- --------------------------------------------------------
 
@@ -200,8 +236,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nombre`, `apellidos`, `direccion`, `telefono`, `cargo`, `fecha_nacimiento`, `email`, `password`, `dias_restantes`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Terrill Gleichner', 'Johnson', '440 Nicolas Extension Apt. 841\nSandrinetown, NY 07330-1559', '(979) 661-4242 x97491', 'earum', '1997-05-12', 'mbeer@example.net', '$2y$10$fzOms.jSV/Cs.milArM9yuBtxQ/OKfBNaJrSJ.LspUZuuFi5q7C/C', 30, '57ulzxsJXZ', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
-(2, 'Amy Klein', 'Hudson', '9266 Gibson Brook\nDanielaberg, NH 38456-5371', '613.234.3391 x877', 'est', '1997-05-12', 'shirley75@example.org', '$2y$10$Hte6QlBMPP74gQya/w00OOhj5jNYnroUW3ZbVqoiY4Y.yeEXjw0ku', 30, 'liq7YMQfZR', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
+(2, 'Amy Klein', 'Hudson1', '9266 Gibson Brook\nDanielaberg, NH 38456-5371', '613.234.3391 x877', 'est', '1997-05-12', 'shirley75@example.org', '$2y$10$Hte6QlBMPP74gQya/w00OOhj5jNYnroUW3ZbVqoiY4Y.yeEXjw0ku', 30, 'liq7YMQfZR', '2018-05-23 17:32:33', '2018-05-30 16:27:08'),
 (3, 'Raymundo Flatley', 'Swaniawski', '134 Klein Brooks Apt. 432\nCartwrightland, SC 80841', '1-805-592-9948 x93543', 'esse', '1997-05-12', 'cordelia.franecki@example.net', '$2y$10$4eVAqrQwtoGF9QnIkZAL8OhBitLrcXtPEjmsYf51Sg7DgA04Mcx0K', 30, 'lYNDhAiQL6', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
 (4, 'Abner McKenzie', 'Stamm', '283 Wuckert Wells\nSouth Stella, AZ 38586-3577', '762-975-0673', 'ut', '1997-05-12', 'gspinka@example.net', '$2y$10$/VgcMroUUOWqGKh9LJpoIOd5jVvSbfl1sig7pSYbmdg9HyCSPJYt.', 30, 'vzlsLLT11y', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
 (5, 'Mr. Humberto Labadie', 'Satterfield', '963 Haley Pass\nPort Vivaport, NC 64347-7007', '1-260-959-5946 x510', 'distinctio', '1997-05-12', 'ifarrell@example.net', '$2y$10$qysIpO5TtydiHHDErNUpmefeXqK0vSrBNJNGoccBPNYdfGnxAZqeS', 30, '6Jv5qqgi2W', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
@@ -210,8 +245,8 @@ INSERT INTO `users` (`id`, `nombre`, `apellidos`, `direccion`, `telefono`, `carg
 (8, 'Miss Mariela Hessel Jr.', 'Zieme', '22125 Kariane Isle Suite 667\nPort Zachariahburgh, UT 77895', '1-801-505-3261 x90081', 'libero', '1997-05-12', 'rschamberger@example.net', '$2y$10$e7ksGy6Pmil1vqRFXmhhVe57ryY2YMRgOZmSPMZnMijlNV7U.SAYu', 30, 'Xj8Sq3Jfys', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
 (9, 'Tierra Eichmann', 'Medhurst', '9253 Hilll Junctions\nNorth Doyleshire, DE 61249-3312', '(329) 413-8016 x7717', 'quos', '1997-05-12', 'baumbach.hilton@example.net', '$2y$10$fGIw9oi3fZPnkiu9J0wh6eVGsxQJe/a3MVJVyQMr4qVcFCS94Tjz6', 30, 'tsa59YB0MD', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
 (10, 'Alexane Kunde', 'Steuber', '1488 Satterfield Ways Apt. 252\nWest Emmaborough, SC 94959-3561', '+1-321-891-7495', 'eum', '1997-05-12', 'bill.parker@example.org', '$2y$10$SJ9h/wmqcSmY7ID8x3b4n.OvV1h4UWopC1VRkY957.fXh.9m3F8h6', 30, 'aCjuNvl6mM', '2018-05-23 17:32:33', '2018-05-23 17:32:33'),
-(12, 'jose', 'martinez', 'calle andorra', '626654689', 'ADMIN', '1999-02-21', 'jose@jose.com', '$2y$10$mDFv3R3URpgK/vm87RppuOb3iE9eh/8UQJV.HmbkDzKVInoG4pLAS', 30, NULL, '2018-05-23 17:48:18', '2018-05-23 17:48:18'),
-(13, 'fernando', 'martinez pellicer', 'calle zaragoza', '626654689', 'ADMIN', '1999-02-21', 'fer@fer.com', '$2y$10$GmaumMccZ9cYltC4kzSGuOi9DhS.xxIPI7ig.UbavcH3JWqn4efNa', 25, NULL, '2018-05-23 17:55:29', '2018-05-23 19:56:42');
+(12, 'jose', 'martinez', 'calle andorra', '626654689', 'EMPLEADO', '1999-02-21', 'jose@jose.com', '$2y$10$hJLivCiudqu/emEHmmR8ZeKP/nxlp2OPThw4TQzEw0knmjzCNevny', 2, NULL, '2018-05-23 17:48:18', '2018-06-06 19:31:04'),
+(13, 'fernando', 'martinez pellicer', 'calle zaragoza', '626654689', 'ADMIN', '1999-02-21', 'fer@fer.com', '$2y$10$jOhyzjlj7mi26LYTNKw/a.Y0pjRN2VNMe0dxsMPs22YllKWkA5I6.', 16, NULL, '2018-05-23 17:55:29', '2018-06-01 06:11:37');
 
 -- --------------------------------------------------------
 
@@ -235,11 +270,27 @@ CREATE TABLE `vacaciones` (
 INSERT INTO `vacaciones` (`id`, `id_empleado`, `fecha_inicio`, `fecha_fin`, `created_at`, `updated_at`) VALUES
 (1, 13, '2018-05-08', '2018-05-23', NULL, NULL),
 (2, 13, '2018-04-03', '2018-05-14', NULL, NULL),
-(3, 13, '2018-06-11', '2018-06-16', '2018-05-23 19:56:42', '2018-05-23 19:56:42');
+(3, 13, '2018-06-11', '2018-06-16', '2018-05-23 19:56:42', '2018-05-23 19:56:42'),
+(4, 13, '2018-05-09', '2018-05-16', '2018-05-30 12:38:35', '2018-05-30 12:38:35'),
+(5, 13, '2018-05-09', '2018-05-10', '2018-05-30 12:52:03', '2018-05-30 12:52:03'),
+(6, 13, '2018-05-10', '2018-05-11', '2018-05-30 12:55:46', '2018-05-30 12:55:46'),
+(17, 13, '2018-07-25', '2018-07-26', '2018-05-30 13:35:35', '2018-05-30 13:35:35'),
+(18, 12, '2018-05-16', '2018-05-24', '2018-05-31 13:29:23', '2018-05-31 13:29:23'),
+(19, 13, '2018-06-07', '2018-06-15', '2018-06-01 06:11:37', '2018-06-01 06:11:37'),
+(20, 12, '2018-06-21', '2018-06-28', '2018-06-01 06:13:15', '2018-06-01 06:13:15'),
+(21, 12, '2018-06-22', '2018-06-29', '2018-06-01 17:35:30', '2018-06-01 17:35:30'),
+(22, 12, '2018-06-14', '2018-06-20', '2018-06-06 19:31:04', '2018-06-06 19:31:04');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `inventarios`
+--
+ALTER TABLE `inventarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `inventarios_codigo_unique` (`codigo`);
 
 --
 -- Indices de la tabla `migrations`
@@ -305,16 +356,22 @@ ALTER TABLE `vacaciones`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `inventarios`
+--
+ALTER TABLE `inventarios`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `nominas`
 --
 ALTER TABLE `nominas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `oauth_clients`
@@ -332,13 +389,13 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
 --
 ALTER TABLE `vacaciones`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
