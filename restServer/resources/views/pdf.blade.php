@@ -13,8 +13,10 @@
 
 </head>
 <body>
+<header>
 <h1 class="page-header">Alimentación Pellicer</h1>
-<table>
+</header>
+<table class="table-bordered ">
     <thead>
     <tr>
         <th>Empleado</th>
@@ -39,7 +41,7 @@
     </tr>
     </tbody>
 </table>
-<table class="table table-hover table-striped">
+<table class="table-bordered">
     <thead>
     <tr>
         <th>Nómina {{ $nomina->fecha_nomina }}</th>

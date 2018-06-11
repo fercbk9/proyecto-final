@@ -20,7 +20,7 @@ class InventarioController extends Controller
     {
         //Mostraremos todos los inventarios paginados.
         return response()->json([
-           'articulos' => Inventario::all()
+           'articulos' => Inventario::all()->take(20)
         ]);
     }
 
@@ -88,7 +88,7 @@ class InventarioController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
         $input = $request->all();
-        $inventario = DB::select("select * from inventarios where codigo like '%".$input['codigo']."%'");
+        $inventario = DB::select("select * from inventarios where codigo like '%".$input['codigo']."%' limit 20");
         if($inventario == null)
         {
             return response()->json([
@@ -182,7 +182,7 @@ class InventarioController extends Controller
         Excel::create('Inventario-'.$date->format('d-m-y'), function($excel) {
             $excel->sheet('Excel sheet', function($sheet) {
                 //otra opción -> $products = Product::select('name')->get();
-                $products = Inventario::all();
+                $products = Inventario::select('codigo','descripcion','peso_unidad','cantidad_stock','precio')->get();
                 $sheet->fromArray($products);
                 $sheet->setOrientation('landscape');
             });
